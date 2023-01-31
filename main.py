@@ -1,2 +1,3 @@
-Здравствуйте!
+print("Hello world!")
+
 
