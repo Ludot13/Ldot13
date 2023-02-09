@@ -7,12 +7,12 @@
 
 # Задача №2
 
-s = input()
-a = s[:s.find('h')]
-b = s[s.find('h'):s.rfind('h') + 1]
-c = s[s.rfind('h') + 1:]
-s = a + b[::-1] + c
-print(s)
+# s = input()
+# a = s[:s.find('h')]
+# b = s[s.find('h'):s.rfind('h') + 1]
+# c = s[s.rfind('h') + 1:]
+# s = a + b[::-1] + c
+# print(s)
 
 # Задача №3
 
@@ -34,3 +34,16 @@ print(s)
 #     if i.startswith("е"):
 #         col += 1
 # print(f"Количество слов: {col}")
+
+# 10.09.23
+# Задача №1
+import re
+def validate_name(name):
+    return re.findall(r'^[a-z\d@_-]{6,18}$', name, re.IGNORECASE)
+
+print(validate_name('_my-p@sswOrd'))
+
+# Задача №2
+# s = "В июне 2021 года, 02/06/2021, 05/06/2021, 14/06/2021, были зафиксированы максимумы ежемесячных осадков."
+# reg = r"[0-3][0-9]/[0-1][0-9]/\d{4}"
+# print(re.findall(reg, s))
