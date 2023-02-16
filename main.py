@@ -57,15 +57,69 @@
 # print(re.findall(r, s))
 
 # Задача 2.
-def CalcSumNegativeNumbers(A):
-    if A == []:
-        return 0
-    else:
-        count = CalcSumNegativeNumbers(A[1:])
-    if A[0]<0:
-            count = count + 1
-    return count
+# def CalcSumNegativeNumbers(A):
+#     if A == []:
+#         return 0
+#     else:
+#         count = CalcSumNegativeNumbers(A[1:])
+#     if A[0]<0:
+#             count = count + 1
+#     return count
+#
+# S = [ -2, 3, 8, -11, -4, 6 ]
+# n = CalcSumNegativeNumbers(L)
+# print("n = ", n)
 
-S = [ -2, 3, 8, -11, -4, 6 ]
-n = CalcSumNegativeNumbers(L)
-print("n = ", n)
+# 17.02.23
+# def binary_search(lst, search_item):
+#     low = 0
+#     high = len(lst) - 1
+#     search_res = False
+#
+#     while low <= high and not search_res:
+#         middle = (low + high) // 2
+#         guess = lst[middle]
+#         if guess == search_item:
+#             search_res = True
+#         if guess > search_item:
+#             high = middle - 1
+#         else:
+#             low = middle + 1
+#     return search_res
+#
+#
+# lst = [6, 10, 14, 15, 34, 39, 42, 63, 71, 97]
+# value = 15
+# result = binary_search(lst, value)
+# if result:
+#     print("Элемент найден!")
+# else:
+#     print("Элемент не найден.")
+
+#№17.02.23
+from random import randint
+
+def binary_search(s, item):
+    found = False
+    first = 0
+    last = len(s) - 1
+    found = False
+    while first <= last and not found:
+        midpoint = (first + last) // 2
+        if s[midpoint] == item:
+            found = True
+        else:
+            if item < s[midpoint]:
+                last = midpoint - 1
+            else:
+                first = midpoint + 1
+    return found
+
+a = [randint(1, 100) for i in range(10)]
+print(a)
+a.sort()
+n = int(input("Введите число: "))
+if binary_search(a, n):
+    print(f"Число {n} в списке присутствует")
+else:
+    print(f"Число {n} в списке отсутствует")
