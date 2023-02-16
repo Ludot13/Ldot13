@@ -150,66 +150,66 @@
 
 #  ---------2--------
 
-f = open("text2.txt", "w")
-f.write("Замена строки в текстовом файле;\nизменить строку в списке;\nзаписать список в файл;")
-f.close()
-
-f = open("text2.txt", "r")
-read_f = f.readlines()
-print(read_f)
-pos = int(input("Введите индекс удаляемой строки: "))
-for i in range(len(read_f)):
-    print(read_f)
-    if i == pos:
-        read_f[i] = ""
-print(read_f)
-f.close()
-
-f = open("text2.txt", "w")
-f.writelines(read_f)
-f.close()
+# f = open("text2.txt", "w")
+# f.write("Замена строки в текстовом файле;\nизменить строку в списке;\nзаписать список в файл;")
+# f.close()
+#
+# f = open("text2.txt", "r")
+# read_f = f.readlines()
+# print(read_f)
+# pos = int(input("Введите индекс удаляемой строки: "))
+# for i in range(len(read_f)):
+#     print(read_f)
+#     if i == pos:
+#         read_f[i] = ""
+# print(read_f)
+# f.close()
+#
+# f = open("text2.txt", "w")
+# f.writelines(read_f)
+# f.close()
 
 #  ---------3--------
-#
-# a = [5, 9, 6, 7]
-# b = [3, 11, 8]
-# c = [2, 4]
-# d = [10, 1, 12]
-# lst = a + b + c + d
-#
-#
-# def bubble(array, n):
-#     if n == 1:
-#         for i in range(len(array) - 1):
-#             for j in range(len(array) - i - 1):
-#                 if array[j] < array[j + 1]:
-#                     array[j], array[j + 1] = array[j + 1], array[j]
-#     elif n == 2:
-#         for i in range(len(array) - 1):
-#             for j in range(len(array) - i - 1):
-#                 if array[j] > array[j + 1]:
-#                     array[j], array[j + 1] = array[j + 1], array[j]
-#
-#
-# print(lst)
-# s = int(input("Выберите способ сортировки, где:\n 1 - сортировка по убыванию\n 2 - сортировка по возрастанию\n -> "))
-# bubble(lst, s)
-# print(lst)
-#
-#
-# def seq_search(lst1, item):
-#     y = 0
-#     found = False
-#     while y < len(lst1) and not found:
-#         if lst1[y] == item:
-#             found = True
-#         else:
-#             y += 1
-#     return found
-#
-#
-# pos = int(input("Введите значение для поиска: "))
-# if seq_search(lst, pos):
-#     print(f"Значение {pos} найдено")
-# else:
-#     print(f"Значение {pos} не найдено")
+
+a = [5, 9, 6, 7]
+b = [3, 11, 8]
+c = [2, 4]
+d = [10, 1, 12]
+lst = a + b + c + d
+
+
+def bubble(array, n):
+    if n == 1:
+        for i in range(len(array) - 1):
+            for j in range(len(array) - i - 1):
+                if array[j] < array[j + 1]:
+                    array[j], array[j + 1] = array[j + 1], array[j]
+    elif n == 2:
+        for i in range(len(array) - 1):
+            for j in range(len(array) - i - 1):
+                if array[j] > array[j + 1]:
+                    array[j], array[j + 1] = array[j + 1], array[j]
+
+
+print(lst)
+s = int(input("Выберите способ сортировки, где:\n 1 - сортировка по убыванию\n 2 - сортировка по возрастанию\n -> "))
+bubble(lst, s)
+print(lst)
+
+
+def seq_search(lst1, item):
+    y = 0
+    found = False
+    while y < len(lst1) and not found:
+        if lst1[y] == item:
+            found = True
+        else:
+            y += 1
+    return found
+
+
+pos = int(input("Введите значение для поиска: "))
+if seq_search(lst, pos):
+    print(f"Значение {pos} найдено")
+else:
+    print(f"Значение {pos} не найдено")
