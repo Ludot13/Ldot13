@@ -215,7 +215,7 @@
 #     print(f"Значение {pos} не найдено")
 
 # 24.02.23
-with open("file1.txt", "w") as f1, open("file2.txt", "w") as f2:
+# with open("file1.txt", "w") as f1, open("file2.txt", "w") as f2:
 #     f1.write("Текст файла № 1")
 #     f2.write("Текст файла № 2")
 #
@@ -245,35 +245,84 @@ with open("file1.txt", "w") as f1, open("file2.txt", "w") as f2:
 # file_found(fl)
 
 # 26.02.23
-class Rectangle:
+# class Rectangle:
+#
+#     def __init__(self, length, width):
+#         self.length = length
+#         self.width = width
+#         print("Длина прямоугольника:", self.length)
+#         print("Ширина прямоугольника:", self.width)
+#
+#     def s_rectangle(self):
+#         s = self.length * self.width
+#         print("Площадь прямоугольника:", s)
+#
+#     def rectangle_perimeter(self):
+#         p = 2 * (self.length + self.width)
+#         print("Периметр прямоугольника:", p)
+#
+#     def rectangle_hypotenuse(self):
+#         h = (self.length**2 + self.width**2)**0.5
+#         print("Гипотенуза прямоугольника:", round(h, 2))
+#
+#     def print_rectangle(self):
+#         for x in range(self.length):
+#             for y in range(self.width):
+#                 print("*", end='')
+#             print()
+#
+#
+# r = Rectangle(3, 9)
+# r.s_rectangle()
+# r.rectangle_perimeter()
+# r.rectangle_hypotenuse()
+# r.print_rectangle()
 
-    def __init__(self, length, width):
-        self.length = length
-        self.width = width
-        print("Длина прямоугольника:", self.length)
-        print("Ширина прямоугольника:", self.width)
+# 03.03.23
 
-    def s_rectangle(self):
-        s = self.length * self.width
-        print("Площадь прямоугольника:", s)
+import math
 
-    def rectangle_perimeter(self):
-        p = 2 * (self.length + self.width)
-        print("Периметр прямоугольника:", p)
+class Sphere:
+    def __init__(self, x, y, z, r):
+        self.x = x
+        self.y = y
+        self.z = z
+        self.r = r
 
-    def rectangle_hypotenuse(self):
-        h = (self.length**2 + self.width**2)**0.5
-        print("Гипотенуза прямоугольника:", round(h, 2))
+    def get_volume(self):
+        return 4 / 3 * math.pi * self.r ** 3
 
-    def print_rectangle(self):
-        for x in range(self.length):
-            for y in range(self.width):
-                print("*", end='')
-            print()
+    def get_square(self):
+        return 4 * math.pi * self.r ** 2
+
+    def get_radius(self):
+        return self.r
+
+    def get_center(self):
+        return (self.x, self.y, self.z)
+
+    def set_radius(self, r):
+        self.r = r
+
+    def set_center(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+    def is_point_inside(self, x, y, z):
+        return (x - self.x) ** 2 + (y - self.y) ** 2 + (z - self.z) ** 2 <= self.r ** 2
 
 
-r = Rectangle(3, 9)
-r.s_rectangle()
-r.rectangle_perimeter()
-r.rectangle_hypotenuse()
-r.print_rectangle()
+s = Sphere(0, 0, 6, 0.6)
+
+print("get_radius:", s.get_radius())
+print("get_volume:", s.get_volume())
+print("get_square:", s.get_square())
+print("get_center:", s.get_center())
+print("get_square:", s.get_square())
+print("is_point_inside (6, -1.5, 0):", s.is_point_inside(6, -1.5, 0))
+
+
+s.set_radius(1.6)
+print("set_radius (1.6):", s.get_radius())
+print("is_point_inside (6, -1.5, 0):", s.is_point_inside(6, -1.5, 0))
