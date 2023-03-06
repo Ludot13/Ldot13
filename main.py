@@ -280,49 +280,138 @@
 
 # 03.03.23
 
+# import math
+#
+# class Sphere:
+#     def __init__(self, x, y, z, r):
+#         self.x = x
+#         self.y = y
+#         self.z = z
+#         self.r = r
+#
+#     def get_volume(self):
+#         return 4 / 3 * math.pi * self.r ** 3
+#
+#     def get_square(self):
+#         return 4 * math.pi * self.r ** 2
+#
+#     def get_radius(self):
+#         return self.r
+#
+#     def get_center(self):
+#         return (self.x, self.y, self.z)
+#
+#     def set_radius(self, r):
+#         self.r = r
+#
+#     def set_center(self, x, y, z):
+#         self.x = x
+#         self.y = y
+#         self.z = z
+#
+#     def is_point_inside(self, x, y, z):
+#         return (x - self.x) ** 2 + (y - self.y) ** 2 + (z - self.z) ** 2 <= self.r ** 2
+#
+#
+# s = Sphere(0, 0, 6, 0.6)
+#
+# print("get_radius:", s.get_radius())
+# print("get_volume:", s.get_volume())
+# print("get_square:", s.get_square())
+# print("get_center:", s.get_center())
+# print("get_square:", s.get_square())
+# print("is_point_inside (6, -1.5, 0):", s.is_point_inside(6, -1.5, 0))
+#
+#
+# s.set_radius(1.6)
+# print("set_radius (1.6):", s.get_radius())
+# print("is_point_inside (6, -1.5, 0):", s.is_point_inside(6, -1.5, 0))
+
+# 10.03.23
+
+# Variant 1
+# class Account:
+#     def __init__(self, balance):
+#         self._balance = balance
+#
+#     @property
+#     def balance(self):
+#         return self._balance
+#
+#     @balance.setter
+#     def balance(self, value):
+#         if value < 0:
+#             raise ValueError("Balance cannot be negative")
+#         self._balance = value
+
+# Variant 2
+# class Account:
+#     def __init__(self, balance):
+#         self._balance = balance
+#
+#     def get_balance(self):
+#         return self._balance
+#
+#     def set_balance(self, value):
+#         if value < 0:
+#             raise ValueError("Balance can't be negative")
+#         self._balance = value
+#
+#     balance = property(get_balance, set_balance)
+
+# 12.03.23
+
 import math
+class Pair:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
 
-class Sphere:
-    def __init__(self, x, y, z, r):
-        self.x = x
-        self.y = y
-        self.z = z
-        self.r = r
+    def set_a(self, a):
+        self.a = a
 
-    def get_volume(self):
-        return 4 / 3 * math.pi * self.r ** 3
+    def set_b(self, b):
+        self.b = b
 
-    def get_square(self):
-        return 4 * math.pi * self.r ** 2
+    def get_sum(self):
+        return self.a + self.b
 
-    def get_radius(self):
-        return self.r
-
-    def get_center(self):
-        return (self.x, self.y, self.z)
-
-    def set_radius(self, r):
-        self.r = r
-
-    def set_center(self, x, y, z):
-        self.x = x
-        self.y = y
-        self.z = z
-
-    def is_point_inside(self, x, y, z):
-        return (x - self.x) ** 2 + (y - self.y) ** 2 + (z - self.z) ** 2 <= self.r ** 2
+    def get_product(self):
+        return self.a * self.b
 
 
-s = Sphere(0, 0, 6, 0.6)
+class RightTriangle(Pair):
+    def __init__(self, a, b):
+        super().__init__(a, b)
 
-print("get_radius:", s.get_radius())
-print("get_volume:", s.get_volume())
-print("get_square:", s.get_square())
-print("get_center:", s.get_center())
-print("get_square:", s.get_square())
-print("is_point_inside (6, -1.5, 0):", s.is_point_inside(6, -1.5, 0))
+    def get_hypotenuse(self):
+        return math.sqrt(self.a ** 2 + self.b ** 2)
+
+    def get_area(self):
+        return self.a * self.b / 2
+
+    def print_info(self):
+        print(f"Прямоугольный треугольник ABC ({self.a}, {self.b}, {self.get_hypotenuse():.2f})")
+        print(f"Площадь ABC: {self.get_area():.1f}")
 
 
-s.set_radius(1.6)
-print("set_radius (1.6):", s.get_radius())
-print("is_point_inside (6, -1.5, 0):", s.is_point_inside(6, -1.5, 0))
+# Пример использования:
+pair = Pair(5, 8)
+print("Сумма:", pair.get_sum())
+print("Произведение:", pair.get_product())
+
+triangle = RightTriangle(5, 8)
+print(f"Гипотенуза ABC: {triangle.get_hypotenuse():.2f}")
+triangle.print_info()
+
+pair.set_a(12)
+pair.set_b(18)
+print("Сумма:", pair.get_sum())
+print("Произведение:", pair.get_product())
+
+triangle.set_a(12)
+triangle.set_b(18)
+print(f"Гипотенуза ABC: {triangle.get_hypotenuse():.2f}")
+print("Сумма:", triangle.get_sum())
+print("Произведение:", triangle.get_product())
+triangle.print_info()
