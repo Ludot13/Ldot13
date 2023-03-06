@@ -367,10 +367,8 @@ class Pair:
         self.a = a
         self.b = b
 
-    def set_a(self, a):
+    def set_numbers(self, a, b):
         self.a = a
-
-    def set_b(self, b):
         self.b = b
 
     def get_sum(self):
@@ -379,39 +377,39 @@ class Pair:
     def get_product(self):
         return self.a * self.b
 
-
 class RightTriangle(Pair):
     def __init__(self, a, b):
         super().__init__(a, b)
+        self.c = math.sqrt(a**2 + b**2)
 
     def get_hypotenuse(self):
-        return math.sqrt(self.a ** 2 + self.b ** 2)
+        return self.c
 
     def get_area(self):
         return self.a * self.b / 2
 
     def print_info(self):
-        print(f"Прямоугольный треугольник ABC ({self.a}, {self.b}, {self.get_hypotenuse():.2f})")
+        print(f"Прямоугольный треугольник ABC ({self.a}, {self.b}, {self.c:.2f})")
         print(f"Площадь ABC: {self.get_area():.1f}")
 
+# создание объекта Pair
+p = Pair(5, 8)
+print(f"Сумма: {p.get_sum()}")
+print(f"Произведение: {p.get_product()}")
 
-# Пример использования:
-pair = Pair(5, 8)
-print("Сумма:", pair.get_sum())
-print("Произведение:", pair.get_product())
+# изменение объекта Pair
+p.set_numbers(10, 20)
+print(f"Сумма: {p.get_sum()}")
+print(f"Произведение: {p.get_product()}")
 
-triangle = RightTriangle(5, 8)
-print(f"Гипотенуза ABC: {triangle.get_hypotenuse():.2f}")
-triangle.print_info()
+# создание объекта RightTriangle
+t = RightTriangle(5, 8)
+print(f"Гипотенуза ABC: {t.get_hypotenuse():.2f}")
+t.print_info()
 
-pair.set_a(12)
-pair.set_b(18)
-print("Сумма:", pair.get_sum())
-print("Произведение:", pair.get_product())
-
-triangle.set_a(12)
-triangle.set_b(18)
-print(f"Гипотенуза ABC: {triangle.get_hypotenuse():.2f}")
-print("Сумма:", triangle.get_sum())
-print("Произведение:", triangle.get_product())
-triangle.print_info()
+# изменение объекта RightTriangle
+t.set_numbers(10, 20)
+print(f"Гипотенуза ABC: {t.get_hypotenuse():.2f}")
+print(f"Сумма: {t.get_sum()}")
+print(f"Произведение: {t.get_product()}")
+t.print_info()
