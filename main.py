@@ -361,55 +361,140 @@
 
 # 12.03.23
 
-import math
-class Pair:
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
+# import math
+# class Pair:
+#     def __init__(self, a, b):
+#         self.a = a
+#         self.b = b
+#
+#     def set_numbers(self, a, b):
+#         self.a = a
+#         self.b = b
+#
+#     def get_sum(self):
+#         return self.a + self.b
+#
+#     def get_product(self):
+#         return self.a * self.b
+#
+# class RightTriangle(Pair):
+#     def __init__(self, a, b):
+#         super().__init__(a, b)
+#         self.c = math.sqrt(a**2 + b**2)
+#
+#     def get_hypotenuse(self):
+#         return self.c
+#
+#     def get_area(self):
+#         return self.a * self.b / 2
+#
+#     def print_info(self):
+#         print(f"Прямоугольный треугольник ABC ({self.a}, {self.b}, {self.c:.2f})")
+#         print(f"Площадь ABC: {self.get_area():.1f}")
+#
+# # создание объекта Pair
+# p = Pair(5, 8)
+# print(f"Сумма: {p.get_sum()}")
+# print(f"Произведение: {p.get_product()}")
+#
+# # изменение объекта Pair
+# p.set_numbers(10, 20)
+# print(f"Сумма: {p.get_sum()}")
+# print(f"Произведение: {p.get_product()}")
+#
+# # создание объекта RightTriangle
+# t = RightTriangle(5, 8)
+# print(f"Гипотенуза ABC: {t.get_hypotenuse():.2f}")
+# t.print_info()
+#
+# # изменение объекта RightTriangle
+# t.set_numbers(10, 20)
+# print(f"Гипотенуза ABC: {t.get_hypotenuse():.2f}")
+# print(f"Сумма: {t.get_sum()}")
+# print(f"Произведение: {t.get_product()}")
+# t.print_info()
 
-    def set_numbers(self, a, b):
-        self.a = a
-        self.b = b
+# 17.03.23
 
-    def get_sum(self):
-        return self.a + self.b
+# class Student:
+#     def __init__(self, name, laptop):
+#         self.name = name
+#         self.laptop = laptop
+#
+#     def print_info(self):
+#         print(f"Student name: {self.name}")
+#         print(f"Laptop model: {self.laptop.model}")
+#         print(f"Laptop processor: {self.laptop.processor}")
+#         print(f"Laptop memory: {self.laptop.memory}")
+#
+#     class Laptop:
+#         def __init__(self, model, processor, memory):
+#             self.model = model
+#             self.processor = processor
+#             self.memory = memory
+#
+# roman_laptop = Student.Laptop("HP", "i7", 16)
+# roman = Student("Roman", roman_laptop)
+# roman.print_info()
+#
+# vladimir_laptop = Student.Laptop("HP", "i7", 16)
+# vladimir = Student("Vladimir", vladimir_laptop)
+# vladimir.print_info()
+#
+# -----------------------
 
-    def get_product(self):
-        return self.a * self.b
 
-class RightTriangle(Pair):
-    def __init__(self, a, b):
-        super().__init__(a, b)
-        self.c = math.sqrt(a**2 + b**2)
+# class Student:
+#     def __init__(self, name):
+#         self.name = name
+#         self.notebook = self.Notebook()
+#
+#     def print_info(self):
+#         print(f"Student name: {self.name}")
+#         print(f"Notebook model: {self.notebook.model}")
+#         print(f"Notebook processor: {self.notebook.processor}")
+#         print(f"Notebook memory: {self.notebook.memory}")
+#
+#     class Notebook:
+#         def __init__(self, model="Unknown", processor="Unknown", memory="Unknown"):
+#             self.model = model
+#             self.processor = processor
+#             self.memory = memory
+#
+# # создаю объект класса Student
+# student = Student("John")
+#
+# # устанавливаю информацию о ноутбуке
+# student.notebook.model = "HP EliteBook"
+# student.notebook.processor = "Intel Core i5-10310U"
+# student.notebook.memory = "8 GB"
+#
+# # вывожу информацию о студенте и его ноутбуке
+# student.print_info()
 
-    def get_hypotenuse(self):
-        return self.c
-
-    def get_area(self):
-        return self.a * self.b / 2
-
-    def print_info(self):
-        print(f"Прямоугольный треугольник ABC ({self.a}, {self.b}, {self.c:.2f})")
-        print(f"Площадь ABC: {self.get_area():.1f}")
-
-# создание объекта Pair
-p = Pair(5, 8)
-print(f"Сумма: {p.get_sum()}")
-print(f"Произведение: {p.get_product()}")
-
-# изменение объекта Pair
-p.set_numbers(10, 20)
-print(f"Сумма: {p.get_sum()}")
-print(f"Произведение: {p.get_product()}")
-
-# создание объекта RightTriangle
-t = RightTriangle(5, 8)
-print(f"Гипотенуза ABC: {t.get_hypotenuse():.2f}")
-t.print_info()
-
-# изменение объекта RightTriangle
-t.set_numbers(10, 20)
-print(f"Гипотенуза ABC: {t.get_hypotenuse():.2f}")
-print(f"Сумма: {t.get_sum()}")
-print(f"Произведение: {t.get_product()}")
-t.print_info()
+# 17.03.23
+# class Student:
+#     def __init__(self, name):
+#         self.name = name
+#         self.note = self.Notebook()
+#
+#     def show(self):
+#         print(self.name, end= " ")
+#         self.note.show()
+#
+#     class Notebook:
+#             def __init__(self):
+#                 self.brand = 'HP'
+#                 self.cpu = 'i7'
+#                 self.ram = 16
+#
+#             def show(self):
+#                 print(f" => {self.brand}, {self.cpu}, {self.ram}")
+#
+# s1 = Student("Roman")
+# s2 = Student("Vladimir")
+# s3 = Student("Sergey")
+#
+# s1.show()
+# s2.show()
+# s3.show()
