@@ -501,66 +501,244 @@
 
 # 19.03.23
 
-class Clock:
-    __DAY = 86400
+# class Clock:
+#     __DAY = 86400
+#
+#     def __init__(self, sec: int):
+#         if not isinstance(sec, int):
+#             raise ValueError("Секунды должны быть целым числом")
+#         self.sec = sec % self.__DAY
+#
+#     def get_format_time(self):
+#         s = self.sec % 60
+#         m = (self.sec // 60) % 60
+#         h = (self.sec // 3600) % 24
+#         return f"{Clock.__get_form(h)}:{Clock.__get_form(m)}:{Clock.__get_form(s)}"
+#
+#     @staticmethod
+#     def __get_form(x):
+#         return str(x) if x > 9 else "0" + str(x)
+#
+#     def __add__(self, other):
+#         if not isinstance(other, Clock):
+#             raise ArithmeticError("Правый операнд должен быть типом Clock")
+#         return Clock(self.sec + other.sec)
+#
+#     def __sub__(self, other):
+#         if not isinstance(other, Clock):
+#             raise ArithmeticError("Правый операнд должен быть типом Clock")
+#         return Clock(self.sec - other.sec)
+#
+#     def __mul__(self, other):
+#         if not isinstance(other, Clock):
+#             raise ArithmeticError("Правый операнд должен быть типом Clock")
+#         return Clock(self.sec * other.sec)
+#
+#     def __floordiv__(self, other):
+#         if not isinstance(other, Clock):
+#             raise ArithmeticError("Правый операнд должен быть типом Clock")
+#         return Clock(self.sec // other.sec)
+#
+#     def __mod__(self, other):
+#         if not isinstance(other, Clock):
+#             raise ArithmeticError("Правый операнд должен быть типом Clock")
+#         return Clock(self.sec % other.sec)
+#
+#
+# c1 = Clock(600)
+# c2 = Clock(200)
+# c3 = c1 - c2
+# print("c1:", c1.get_format_time())
+# print("c1 - c2:", c3.get_format_time())
+# c3 = c1 * c2
+# print("c1 * c2:", c3.get_format_time())
+# c3 = c1 // c2
+# print("c1 // c2:", c3.get_format_time())
+# c3 = c1 % c2
+# print("c1 % c2:", c3.get_format_time())
+# c1 -= c2
+# print("c1 -= c2:", c1.get_format_time())
+# c1 *= c2
+# print("c1 *= c2:", c1.get_format_time())
+# c1 //= c2
+# print("c1 //= c2:", c1.get_format_time())
+# c1 %= c2
+# print("c1 %= c2:", c1.get_format_time())
 
-    def __init__(self, sec: int):
-        if not isinstance(sec, int):
-            raise ValueError("Секунды должны быть целым числом")
-        self.sec = sec % self.__DAY
+# 24.03.23
 
-    def get_format_time(self):
-        s = self.sec % 60
-        m = (self.sec // 60) % 60
-        h = (self.sec // 3600) % 24
-        return f"{Clock.__get_form(h)}:{Clock.__get_form(m)}:{Clock.__get_form(s)}"
+# class Point3D:
+#     def __init__(self, x, y, z):
+#         self.x = x
+#         self.y = y
+#         self.z = z
+#
+#     def __repr__(self):
+#         return f"{self.x}, {self.y}, {self.z}"
+# def __add__(self, other):
+#     return Point3D(self.x + other.x, self.y + other.y, self.z + other.z)
+#
+# def __sub__(self, other):
+#     return Point3D(self.x - other.x, self.y - other.y, self.z - other.z)
+#
+# def __mul__(self, other):
+#     return Point3D(self.x * other.x, self.y * other.y, self.z * other.z)
+#
+# def __truediv__(self, other):
+#     return Point3D(self.x / other.x, self.y / other.y, self.z / other.z)
+#
+# def __eq__(self, other):
+#     return self.x == other.x and self.y == other.y and self.z == other.z
+#
+# def __str__(self):
+#     return "({}, {}, {})".format(self.x, self.y, self.z)
+#
+# def __getitem__(self, key):
+#     if key == "x":
+#         return self.x
+#     elif key == "y":
+#         return self.y
+#     elif key == "z":
+#         return self.z
+#
+# def __setitem__(self, key, value):
+#     if key == "x":
+#         self.x = value
+#     elif key == "y":
+#         self.y = value
+#     elif key == "z":
+#         self.z = value
+#
+# point1 = Point3D(12, 15, 18)
+# point2 = Point3D(6, 3, 9)
+#
+# print("Координаты 1-й точки:", point1)
+# print("Координаты 2-й точки:", point2)
+#
+# sum_point = point1 + point2
+# print("Сложение координат:", sum_point)
+#
+# sub_point = point1 - point2
+# print("Вычитание координат:", sub_point)
+#
+# mul_point = point1 * point2
+# print("Умножение:", mul_point)
+#
+# div_point = point1 / point2
+# print("Деление:", div_point)
+#
+# print("Равенство координат:", point1 == point2)
+#
+# print("x =", point1["x"], "x1 =", point2["x"])
+# print("y =", point1["y"], "y1 =", point2["y"])
+# print("z =", point1["z"], "z1 =", point2["z"])
+#
+# point1["x"] = 20
+# print("Запись значения в координату x:", point1["x"])
 
-    @staticmethod
-    def __get_form(x):
-        return str(x) if x > 9 else "0" + str(x)
 
-    def __add__(self, other):
-        if not isinstance(other, Clock):
-            raise ArithmeticError("Правый операнд должен быть типом Clock")
-        return Clock(self.sec + other.sec)
-
-    def __sub__(self, other):
-        if not isinstance(other, Clock):
-            raise ArithmeticError("Правый операнд должен быть типом Clock")
-        return Clock(self.sec - other.sec)
-
-    def __mul__(self, other):
-        if not isinstance(other, Clock):
-            raise ArithmeticError("Правый операнд должен быть типом Clock")
-        return Clock(self.sec * other.sec)
-
-    def __floordiv__(self, other):
-        if not isinstance(other, Clock):
-            raise ArithmeticError("Правый операнд должен быть типом Clock")
-        return Clock(self.sec // other.sec)
-
-    def __mod__(self, other):
-        if not isinstance(other, Clock):
-            raise ArithmeticError("Правый операнд должен быть типом Clock")
-        return Clock(self.sec % other.sec)
+# 26.03.23
+from abc import ABC, abstractmethod
+from math import sqrt
 
 
-c1 = Clock(600)
-c2 = Clock(200)
-c3 = c1 - c2
-print("c1:", c1.get_format_time())
-print("c1 - c2:", c3.get_format_time())
-c3 = c1 * c2
-print("c1 * c2:", c3.get_format_time())
-c3 = c1 // c2
-print("c1 // c2:", c3.get_format_time())
-c3 = c1 % c2
-print("c1 % c2:", c3.get_format_time())
-c1 -= c2
-print("c1 -= c2:", c1.get_format_time())
-c1 *= c2
-print("c1 *= c2:", c1.get_format_time())
-c1 //= c2
-print("c1 //= c2:", c1.get_format_time())
-c1 %= c2
-print("c1 %= c2:", c1.get_format_time())
+class Shape(ABC):
+    def __init__(self, col):
+        self.col = col
+
+    @abstractmethod
+    def __call__(self):
+        ...
+
+    @abstractmethod
+    def area(self):
+        print("Площадь: ", end="")
+
+    @abstractmethod
+    def perimetr(self):
+        print("Периметр: ", end="")
+
+    @abstractmethod
+    def draw(self):
+        pass
+
+
+class Square(Shape):
+    def __init__(self, s, col):
+        self.s = s
+        super().__init__(col)
+
+    def __call__(self):
+        print(f"===Квадрат===\nСторона: {self.s}\nЦвет: {self.col}")
+
+    def area(self):
+        super().area()
+        print(self.s ** 2)
+
+    def perimetr(self):
+        super().perimetr()
+        print(4 * self.s)
+
+    def draw(self):
+        for i in range(self.s):
+            print('*' * self.s)
+
+
+class Rectangle(Shape):
+    def __init__(self, length, width, col):
+        self.length = length
+        self.width = width
+        super().__init__(col)
+
+    def __call__(self):
+        print(f"===Прямоугольник===\nДлина: {self.length}\nШирина: {self.width}\nЦвет: {self.col}")
+
+    def area(self):
+        super().area()
+        print(self.length * self.width)
+
+    def perimetr(self):
+        super().perimetr()
+        print((self.length + self.width)*2)
+
+    def draw(self):
+        for i in range(self.length):
+            print('*' * self.width)
+
+
+class Triangle(Shape):
+    def __init__(self, s1, s2, s3, col):
+        self.s1 = s1
+        self.s2 = s2
+        self.s3 = s3
+        super().__init__(col)
+
+    def __call__(self):
+        print(f"===Треугольник===\nСторона 1: {self.s1}\nСторона 2: {self.s2}\nСторона 3: {self.s3}\nЦвет: {self.col}")
+
+    def area(self):
+        super().area()
+        print(round((self.s1 / 4) * (sqrt(4 * self.s2 ** 2 - self.s1 ** 2)), 2))
+
+    def perimetr(self):
+        super().perimetr()
+        print(self.s1 + self.s2 + self.s3)
+
+    def draw(self):
+        for i in range(self.s2):
+            print(' ' * (self.s2 - 1 - i) + '*' * (1 + i * 2))
+
+
+p1 = Square(3, "red")
+p2 = Rectangle(3, 7, "green")
+p3 = Triangle(11, 6, 6, "yellow")
+px = [p1, p2, p3]
+
+for x in px:
+    x()
+    x.area()
+    x.perimetr()
+    x.draw()
+    print()
+    print()
+
