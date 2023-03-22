@@ -609,136 +609,208 @@
 #     elif key == "z":
 #         self.z = value
 #
-# point1 = Point3D(12, 15, 18)
-# point2 = Point3D(6, 3, 9)
-#
-# print("Координаты 1-й точки:", point1)
-# print("Координаты 2-й точки:", point2)
-#
-# sum_point = point1 + point2
-# print("Сложение координат:", sum_point)
-#
-# sub_point = point1 - point2
-# print("Вычитание координат:", sub_point)
-#
-# mul_point = point1 * point2
-# print("Умножение:", mul_point)
-#
-# div_point = point1 / point2
-# print("Деление:", div_point)
-#
-# print("Равенство координат:", point1 == point2)
-#
-# print("x =", point1["x"], "x1 =", point2["x"])
-# print("y =", point1["y"], "y1 =", point2["y"])
-# print("z =", point1["z"], "z1 =", point2["z"])
-#
-# point1["x"] = 20
-# print("Запись значения в координату x:", point1["x"])
+# p1 = Point3D(12, 15, 18)
+# # p2 = Point3D(6, 3, 9)
+# # print("Координаты 1-й точки:", p1)
+# # print("Координаты 2-й точки:", p2)
+# # p3 = p1 + p2
+# # print("Сложение координат:", p3)
+# # p3 = p1 - p2
+# # print("Вычитание координат:", p3)
+# # p3 = p1 * p2
+# # print("Умножение:", p3)
+# # p3 = p1 / p2
+# # print("Деление:", p3)
+# # if p1 == p2:
+# #     print("Равенство координат: True")
+# # else:
+# #     print("Равенство координат: False")
+# # print("x =", p1["x"], "x1 =", p2["x"])
+# # print("y =", p1["y"], "y1 =", p2["y"])
+# # print("z =", p1["z"], "z1 =", p2["z"])
+# # p1["x"] = 20
+# # print("Запись значения в координату x:", p1["x"])
 
+# 24.03.23
+
+class Point3D:
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+    def __repr__(self):
+        return f"{self.x}, {self.y}, {self.z}"
+
+    def __add__(self, other):
+        return self.x + other.x, self.y + other.y, self.z + other.z
+
+    def __sub__(self, other):
+        return self.x - other.x, self.y - other.y, self.z - other.z
+
+    def __mul__(self, other):
+        return self.x * other.x, self.y * other.y, self.z * other.z
+
+    def __truediv__(self, other):
+        return self.x / other.x, self.y / other.y, self.z / other.z
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y and self.z == other.z
+
+    def __getitem__(self, item):
+        if not isinstance(item, str):
+            raise ValueError("Ключ должен быть строкой")
+
+        if item == "x":
+            return self.x
+        elif item == "y":
+            return self.y
+        elif item == "z":
+            return self.z
+
+        return "Неверный ключ"
+
+    def __setitem__(self, key, value):
+        if not isinstance(key, str):
+            raise ValueError("Ключ должен быть строкой")
+
+        if not isinstance(value, int or float):
+            raise ValueError("Значение должно быть числом")
+
+        if key == "x":
+            self.x = value
+
+        if key == "y":
+            self.y = value
+
+        if key == "z":
+            self.z = value
+
+
+p1 = Point3D(12, 15, 18)
+p2 = Point3D(6, 3, 9)
+print("Координаты 1-й точки:", p1)
+print("Координаты 2-й точки:", p2)
+p3 = p1 + p2
+print("Сложение координат:", p3)
+p3 = p1 - p2
+print("Вычитание координат:", p3)
+p3 = p1 * p2
+print("Умножение:", p3)
+p3 = p1 / p2
+print("Деление:", p3)
+if p1 == p2:
+    print("Равенство координат: True")
+else:
+    print("Равенство координат: False")
+print("x =", p1["x"], "x1 =", p2["x"])
+print("y =", p1["y"], "y1 =", p2["y"])
+print("z =", p1["z"], "z1 =", p2["z"])
+p1["x"] = 20
+print("Запись значения в координату x:", p1["x"])
 
 # 26.03.23
-from abc import ABC, abstractmethod
-from math import sqrt
-
-
-class Shape(ABC):
-    def __init__(self, col):
-        self.col = col
-
-    @abstractmethod
-    def __call__(self):
-        ...
-
-    @abstractmethod
-    def area(self):
-        print("Площадь: ", end="")
-
-    @abstractmethod
-    def perimetr(self):
-        print("Периметр: ", end="")
-
-    @abstractmethod
-    def draw(self):
-        pass
-
-
-class Square(Shape):
-    def __init__(self, s, col):
-        self.s = s
-        super().__init__(col)
-
-    def __call__(self):
-        print(f"===Квадрат===\nСторона: {self.s}\nЦвет: {self.col}")
-
-    def area(self):
-        super().area()
-        print(self.s ** 2)
-
-    def perimetr(self):
-        super().perimetr()
-        print(4 * self.s)
-
-    def draw(self):
-        for i in range(self.s):
-            print('*' * self.s)
-
-
-class Rectangle(Shape):
-    def __init__(self, length, width, col):
-        self.length = length
-        self.width = width
-        super().__init__(col)
-
-    def __call__(self):
-        print(f"===Прямоугольник===\nДлина: {self.length}\nШирина: {self.width}\nЦвет: {self.col}")
-
-    def area(self):
-        super().area()
-        print(self.length * self.width)
-
-    def perimetr(self):
-        super().perimetr()
-        print((self.length + self.width)*2)
-
-    def draw(self):
-        for i in range(self.length):
-            print('*' * self.width)
-
-
-class Triangle(Shape):
-    def __init__(self, s1, s2, s3, col):
-        self.s1 = s1
-        self.s2 = s2
-        self.s3 = s3
-        super().__init__(col)
-
-    def __call__(self):
-        print(f"===Треугольник===\nСторона 1: {self.s1}\nСторона 2: {self.s2}\nСторона 3: {self.s3}\nЦвет: {self.col}")
-
-    def area(self):
-        super().area()
-        print(round((self.s1 / 4) * (sqrt(4 * self.s2 ** 2 - self.s1 ** 2)), 2))
-
-    def perimetr(self):
-        super().perimetr()
-        print(self.s1 + self.s2 + self.s3)
-
-    def draw(self):
-        for i in range(self.s2):
-            print(' ' * (self.s2 - 1 - i) + '*' * (1 + i * 2))
-
-
-p1 = Square(3, "red")
-p2 = Rectangle(3, 7, "green")
-p3 = Triangle(11, 6, 6, "yellow")
-px = [p1, p2, p3]
-
-for x in px:
-    x()
-    x.area()
-    x.perimetr()
-    x.draw()
-    print()
-    print()
+# from abc import ABC, abstractmethod
+# from math import sqrt
+#
+#
+# class Shape(ABC):
+#     def __init__(self, col):
+#         self.col = col
+#
+#     @abstractmethod
+#     def __call__(self):
+#         ...
+#
+#     @abstractmethod
+#     def area(self):
+#         print("Площадь: ", end="")
+#
+#     @abstractmethod
+#     def perimetr(self):
+#         print("Периметр: ", end="")
+#
+#     @abstractmethod
+#     def draw(self):
+#         pass
+#
+#
+# class Square(Shape):
+#     def __init__(self, s, col):
+#         self.s = s
+#         super().__init__(col)
+#
+#     def __call__(self):
+#         print(f"===Квадрат===\nСторона: {self.s}\nЦвет: {self.col}")
+#
+#     def area(self):
+#         super().area()
+#         print(self.s ** 2)
+#
+#     def perimetr(self):
+#         super().perimetr()
+#         print(4 * self.s)
+#
+#     def draw(self):
+#         for i in range(self.s):
+#             print('*' * self.s)
+#
+#
+# class Rectangle(Shape):
+#     def __init__(self, length, width, col):
+#         self.length = length
+#         self.width = width
+#         super().__init__(col)
+#
+#     def __call__(self):
+#         print(f"===Прямоугольник===\nДлина: {self.length}\nШирина: {self.width}\nЦвет: {self.col}")
+#
+#     def area(self):
+#         super().area()
+#         print(self.length * self.width)
+#
+#     def perimetr(self):
+#         super().perimetr()
+#         print((self.length + self.width)*2)
+#
+#     def draw(self):
+#         for i in range(self.length):
+#             print('*' * self.width)
+#
+#
+# class Triangle(Shape):
+#     def __init__(self, s1, s2, s3, col):
+#         self.s1 = s1
+#         self.s2 = s2
+#         self.s3 = s3
+#         super().__init__(col)
+#
+#     def __call__(self):
+#         print(f"===Треугольник===\nСторона 1: {self.s1}\nСторона 2: {self.s2}\nСторона 3: {self.s3}\nЦвет: {self.col}")
+#
+#     def area(self):
+#         super().area()
+#         print(round((self.s1 / 4) * (sqrt(4 * self.s2 ** 2 - self.s1 ** 2)), 2))
+#
+#     def perimetr(self):
+#         super().perimetr()
+#         print(self.s1 + self.s2 + self.s3)
+#
+#     def draw(self):
+#         for i in range(self.s2):
+#             print(' ' * (self.s2 - 1 - i) + '*' * (1 + i * 2))
+#
+#
+# p1 = Square(3, "red")
+# p2 = Rectangle(3, 7, "green")
+# p3 = Triangle(11, 6, 6, "yellow")
+# px = [p1, p2, p3]
+#
+# for x in px:
+#     x()
+#     x.area()
+#     x.perimetr()
+#     x.draw()
+#     print()
+#     print()
 
