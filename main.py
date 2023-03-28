@@ -814,3 +814,89 @@
 #     print()
 #     print()
 
+# 31.03.23
+# class Integer:
+#     def __set_name__(self, owner, name):
+#         self.name = name
+#
+#     def __get__(self, instance, owner):
+#         return instance.__dict__[self.name]
+#
+#     def __set__(self, instance, value):
+#         if not isinstance(value, int) or value <= 0:
+#             raise ValueError(f"Координата {value} должна быть целым, положительным числом")
+#         instance.__dict__[self.name] = value
+#
+# class Triangle:
+#     s1 = Integer()
+#     s2 = Integer()
+#     s3 = Integer()
+#
+#     def __init__(self, s1, s2, s3):
+#         self.s1 = s1
+#         self.s2 = s2
+#         self.s3 = s3
+#
+#     def triangle_test(self):
+#         if self.s1 + self.s2 > self.s3 and self.s1 + self.s3 > self.s2 and self.s2 + self.s3 > self.s1:
+#             return f"Треугольник со сторонами {self.s1, self.s2, self.s3} существует."
+#         else:
+#             return f"Треугольник со сторонами {self.s1, self.s2, self.s3} не существует."
+#
+#
+# p = Triangle(2, 5, 6)
+# print(p.triangle_test())
+# p = Triangle(5, 2, 8)
+# print(p.triangle_test())
+# p = Triangle(7, 3, 6)
+# print(p.triangle_test())
+
+# 02.04.23
+
+import json
+from random import choice
+
+
+def gen_person():
+    name = ''
+    tel = ''
+
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+
+    while len(name) != 7:
+        name += choice(letters)
+
+    while len(tel) != 10:
+        tel += choice(nums)
+
+    person = {
+        'name': name,
+        'tel': tel
+    }
+    return person
+
+
+def gen_key():
+    key = ''
+    nums = ['1', '2', 'n', '4', 'a', 't', '6']
+
+    while len(key) != 8:
+        key += choice(nums)
+    return key
+
+
+def write_json(person_dict, key_dict):
+    try:
+        data = json.load(open('persons.json'))
+    except FileNotFoundError:
+        data = dict()
+
+    data[key_dict] = person_dict
+    with open('persons.json', 'w') as f:
+        json.dump(data, f, indent=2)
+
+
+for i in range(5):
+    write_json(gen_person(), gen_key())
+    
