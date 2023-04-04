@@ -853,50 +853,194 @@
 
 # 02.04.23
 
+# import json
+# from random import choice
+#
+#
+# def gen_person():
+#     name = ''
+#     tel = ''
+#
+#     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+#     nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+#
+#     while len(name) != 7:
+#         name += choice(letters)
+#
+#     while len(tel) != 10:
+#         tel += choice(nums)
+#
+#     person = {
+#         'name': name,
+#         'tel': tel
+#     }
+#     return person
+#
+#
+# def gen_key():
+#     key = ''
+#     nums = ['1', '2', 'n', '4', 'a', 't', '6']
+#
+#     while len(key) != 8:
+#         key += choice(nums)
+#     return key
+#
+#
+# def write_json(person_dict, key_dict):
+#     try:
+#         data = json.load(open('persons.json'))
+#     except FileNotFoundError:
+#         data = dict()
+#
+#     data[key_dict] = person_dict
+#     with open('persons.json', 'w') as f:
+#         json.dump(data, f, indent=2)
+#
+#
+# for i in range(5):
+#     write_json(gen_person(), gen_key())
+
+
+# 07.04
+
+# import json
+#
+# with open('countries.json', 'r') as f:
+#     countries = json.load(f)
+#
+# delete_country = input("Введите название страны для удаления: ")
+#
+# if delete_country in countries:
+#     del countries[delete_country]
+#     with open('countries.json', 'w') as f:
+#         json.dump(countries, f)
+#     print("Данные успешно удалены")
+# else:
+#     print("Данные не найдены")
+#
+#
+# import json
+#
+# with open('countries.json', 'r') as f:
+#     countries = json.load(f)
+#
+# search_country = input("Введите название страны для поиска: ")
+#
+# if search_country in countries:
+#     print(f"Страна: {search_country}, Столица: {countries[search_country]}")
+# else:
+#     print("Данные не найдены")
+#
+#
+# import json
+#
+# with open('countries.json', 'r') as f:
+#     countries = json.load(f)
+#
+# edit_country = input("Введите название страны для редактирования: ")
+#
+# if edit_country in countries:
+#     print(f"Текущая столица: {countries[edit_country]}")
+#     new_capital = input("Введите новое название столицы: ")
+#     countries[edit_country] = new_capital
+#     with open('countries.json', 'w') as f:
+#         json.dump(countries, f)
+#     print("Данные успешно отредактированы")
+# else:
+#     print("Данные не найдены")
+#
+#
+# import json
+#
+# with open('countries.json', 'r') as f:
+#     countries = json.load(f)
+#
+# for country, capital in countries.items():
+#     print(f"Страна: {country}, Столица: {capital}")
+
+
+# 07.04
 import json
-from random import choice
+
+class Place:
+    data = dict()
+
+    def __call__(self):
+        print('*' * 30, "\nВыбор действия:\n1 - добавление данных\n2 - удаление данных\n3 - поиск данных\n"
+                        "4 - редактирование данных\n5 - просмотр данных\n6 - завершение работы")
+
+    @staticmethod
+    def write_json(country_dict, city_dict):
+        data = json.load(open('country.json'))
+        data[country_dict] = city_dict
+        with open('country.json', 'w') as f:
+            json.dump(data, f, indent=2)
+        print("Файл сохранен")
+
+    @staticmethod
+    def delete_json(country_dict):
+        data = json.load(open('country.json'))
+        del data[country_dict]
+        with open('country.json', 'w') as f:
+            json.dump(data, f, indent=2)
+        print("Файл успешно отредактирован и сохранен")
+
+    @staticmethod
+    def search_json(country_dict):
+        data = json.load(open('country.json'))
+        if country_dict in data:
+            print(f"Страна: {country_dict}, со столицей: {data[country_dict]} хранится в нашей базе")
+        else:
+            print("Такая страна отсутствует в нашей базе")
+
+    @staticmethod
+    def redaction_json(country_dict, city_dict):
+        data = json.load(open('country.json'))
+        data[country_dict] = city_dict
+        with open('country.json', 'w') as f:
+            json.dump(data, f, indent=2)
+        print("Файл успешно отредактирован и сохранен")
+
+    @staticmethod
+    def info():
+        with open('country.json', 'r') as f:
+            data = json.load(f)
+            print(data)
+
+    def action(self, number):
+        while number != 6:
+            if number == 1:
+                country1 = input("Введите название страны (с заглавной буквы): ")
+                city1 = input("Введите название столицы (с заглавной буквы): ")
+                self.write_json(country1, city1)
+                self.__call__()
+                self.action(int(input("Ввод: ")))
+            elif number == 2:
+                country2 = input("Введите страну, которую хотите удалить (с заглавной буквы): ")
+                self.delete_json(country2)
+                self.__call__()
+                self.action(int(input("Ввод: ")))
+            elif number == 3:
+                country3 = input("Введите страну, которую хотите найти (с заглавной буквы): ")
+                self.search_json(country3)
+                self.__call__()
+                self.action(int(input("Ввод: ")))
+            elif number == 4:
+                country4 = input("Введите страну, которую хотите отредактировать (с заглавной буквы): ")
+                city4 = input("Введите новое название столицы: ")
+                self.redaction_json(country4, city4)
+                self.__call__()
+                self.action(int(input("Ввод: ")))
+            elif number == 5:
+                self.info()
+                self.__call__()
+                self.action(int(input("Ввод: ")))
+            break
 
 
-def gen_person():
-    name = ''
-    tel = ''
-
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-    nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-
-    while len(name) != 7:
-        name += choice(letters)
-
-    while len(tel) != 10:
-        tel += choice(nums)
-
-    person = {
-        'name': name,
-        'tel': tel
-    }
-    return person
-
-
-def gen_key():
-    key = ''
-    nums = ['1', '2', 'n', '4', 'a', 't', '6']
-
-    while len(key) != 8:
-        key += choice(nums)
-    return key
-
-
-def write_json(person_dict, key_dict):
-    try:
-        data = json.load(open('persons.json'))
-    except FileNotFoundError:
-        data = dict()
-
-    data[key_dict] = person_dict
-    with open('persons.json', 'w') as f:
-        json.dump(data, f, indent=2)
-
-
-for i in range(5):
-    write_json(gen_person(), gen_key())
-    
+s = Place()
+s()
+num = int(input("Ввод: "))
+s.action(num)
+print("Работа завершена")
+print(30 * '*')
