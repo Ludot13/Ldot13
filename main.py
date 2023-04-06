@@ -1052,42 +1052,70 @@
 # from bs4 import BeautifulSoup
 
 
+# import requests
+# from bs4 import BeautifulSoup
+# import csv
+#
+# def get_html(url):
+#     response = requests.get(url)
+#     if not response.ok:
+#         print(f"Server responded with {response.status_code}")
+#     else:
+#         return response.text
+#
+#
+# def parse_html(html):
+#     soup = BeautifulSoup(html, 'html.parser')
+#     movie_list = soup.find_all('div', {'class': 'lister-item mode-advanced'})
+#
+#     data = []
+#     for movie in movie_list:
+#         title = movie.find('h3', {'class': 'lister-item-header'}).a.text.strip()
+#         year = movie.find('span', {'class': 'lister-item-year'}).text.strip('()')
+#         rating = movie.find('div', {'class': 'ratings-bar'}).strong.text.strip()
+#         link = movie.find('h3', {'class': 'lister-item-header'}).a.get('href')
+#         data.append([title, year, rating, link])
+#
+#     return data
+#
+# def write_csv(data):
+#     with open('movies.csv', 'w', newline='', encoding='utf-8') as f:
+#         writer = csv.writer(f)
+#         writer.writerow(['Title', 'Year', 'Rating', 'Link'])
+#         writer.writerows(data)
+#
+# url = 'https://www.imdb.com/chart/top'
+#
+# html = get_html(url)
+# data = parse_html(html)
+# write_csv(data)
+
 import requests
 from bs4 import BeautifulSoup
 import csv
 
-def get_html(url):
-    response = requests.get(url)
-    if not response.ok:
-        print(f"Server responded with {response.status_code}")
-    else:
-        return response.text
+url = 'https://www.imdb.com/chart/top/'
 
+response = requests.get(url)
 
-def parse_html(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    movie_list = soup.find_all('div', {'class': 'lister-item mode-advanced'})
+soup = BeautifulSoup(response.text, 'html.parser')
 
-    data = []
-    for movie in movie_list:
-        title = movie.find('h3', {'class': 'lister-item-header'}).a.text.strip()
-        year = movie.find('span', {'class': 'lister-item-year'}).text.strip('()')
-        rating = movie.find('div', {'class': 'ratings-bar'}).strong.text.strip()
-        link = movie.find('h3', {'class': 'lister-item-header'}).a.get('href')
-        data.append([title, year, rating, link])
+movies = soup.select('td.titleColumn')
+crew = [a.attrs.get('title') for a in soup.select('td.titleColumn a')]
+ratings = [b.attrs.get('data-value') for b in soup.select('td.posterColumn span[name="ir"]')]
 
-    return data
+movie_data = []
 
-def write_csv(data):
-    with open('movies.csv', 'w', newline='', encoding='utf-8') as f:
-        writer = csv.writer(f)
-        writer.writerow(['Title', 'Year', 'Rating', 'Link'])
-        writer.writerows(data)
+for i in range(len(movies)):
+    movie_string = movies[i].get_text()
+    movie = (' '.join(movie_string.split()).replace('.', ''), crew[i], ratings[i], 'https://www.imdb.com' + movies[i].a.attrs.get('href'))
+    movie_data.append(movie)
 
-url = 'https://www.imdb.com/chart/top'
+headers = ['Title', 'Year/Crew', 'Rating', 'Link']
 
-html = get_html(url)
+with open('movies.csv', 'w', encoding='utf-8', newline='') as output_file:
+    writer = csv.writer(output_file)
+    writer.writerow(headers)
+    writer.writerows(movie_data)
 
-data = parse_html(html)
-
-write_csv(data)
+print('Parsing completed successfully. Check the movies.csv file for the results.')
