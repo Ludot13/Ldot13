@@ -1090,32 +1090,92 @@
 # data = parse_html(html)
 # write_csv(data)
 
+# import requests
+# from bs4 import BeautifulSoup
+# import csv
+#
+# url = 'https://www.imdb.com/chart/top/'
+#
+# response = requests.get(url)
+#
+# soup = BeautifulSoup(response.text, 'html.parser')
+#
+# movies = soup.select('td.titleColumn')
+# crew = [a.attrs.get('title') for a in soup.select('td.titleColumn a')]
+# ratings = [b.attrs.get('data-value') for b in soup.select('td.posterColumn span[name="ir"]')]
+#
+# movie_data = []
+#
+# for i in range(len(movies)):
+#     movie_string = movies[i].get_text()
+#     movie = (' '.join(movie_string.split()).replace('.', ''), crew[i], ratings[i], 'https://www.imdb.com' + movies[i].a.attrs.get('href'))
+#     movie_data.append(movie)
+#
+# headers = ['Title', 'Year/Crew', 'Rating', 'Link']
+#
+# with open('movies.csv', 'w', encoding='utf-8', newline='') as output_file:
+#     writer = csv.writer(output_file)
+#     writer.writerow(headers)
+#     writer.writerows(movie_data)
+#
+# print('Parsing completed successfully. Check the movies.csv file for the results.')
+
+# 14.04
+
 import requests
 from bs4 import BeautifulSoup
 import csv
 
+
+class IMDBScraper:
+    def __init__(self, url):
+        self.url = url
+
+    def fetch_data(self):
+        response = requests.get(self.url)
+        if response.ok:
+            return response.text
+        else:
+            print('Error loading page', self.url)
+
+    def parse_top_250(self):
+        data = []
+        html = self.fetch_data()
+        soup = BeautifulSoup(html, 'html.parser')
+        table = soup.find('tbody', {'class': 'lister-list'})
+        rows = table.find_all('tr')
+        for row in rows:
+            title_column = row.find('td', {'class': 'titleColumn'})
+            title = title_column.a.text
+            year = title_column.span.text.strip('()')
+            rating = row.find('td', {'class': 'ratingColumn'}).strong.text
+            data.append([title, year, rating])
+        return data
+
+    def parse_top_250_no_pandas(self):
+        data = []
+        html = self.fetch_data()
+        soup = BeautifulSoup(html, 'html.parser')
+        table = soup.find('tbody', {'class': 'lister-list'})
+        rows = table.find_all('tr')
+        for row in rows:
+            title_column = row.find('td', {'class': 'titleColumn'})
+            title = title_column.a.text
+            year = title_column.span.text.strip('()')
+            rating = row.find('td', {'class': 'ratingColumn'}).strong.text
+            data.append([title, year, rating])
+        return data
+
+
 url = 'https://www.imdb.com/chart/top/'
+scraper = IMDBScraper(url)
+data = scraper.parse_top_250()
+for item in data:
+    print(item)
 
-response = requests.get(url)
-
-soup = BeautifulSoup(response.text, 'html.parser')
-
-movies = soup.select('td.titleColumn')
-crew = [a.attrs.get('title') for a in soup.select('td.titleColumn a')]
-ratings = [b.attrs.get('data-value') for b in soup.select('td.posterColumn span[name="ir"]')]
-
-movie_data = []
-
-for i in range(len(movies)):
-    movie_string = movies[i].get_text()
-    movie = (' '.join(movie_string.split()).replace('.', ''), crew[i], ratings[i], 'https://www.imdb.com' + movies[i].a.attrs.get('href'))
-    movie_data.append(movie)
-
-headers = ['Title', 'Year/Crew', 'Rating', 'Link']
-
-with open('movies.csv', 'w', encoding='utf-8', newline='') as output_file:
-    writer = csv.writer(output_file)
-    writer.writerow(headers)
-    writer.writerows(movie_data)
-
-print('Parsing completed successfully. Check the movies.csv file for the results.')
+# save data to a CSV file
+with open('imdb_top_250.csv', 'w', newline='', encoding='utf-8') as f:
+    writer = csv.writer(f)
+    writer.writerow(['Title', 'Year', 'Rating'])
+    writer.writerows(data)
+print('Data saved to imdb_top_250.csv.')
