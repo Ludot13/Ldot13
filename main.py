@@ -96,7 +96,7 @@
 # else:
 #     print("Элемент не найден.")
 
-#№17.02.23
+# 17.02.23
 # from random import randint
 #
 # def binary_search(s, item):
@@ -960,87 +960,134 @@
 
 
 # 07.04
-import json
+# import json
+#
+# class Place:
+#     data = dict()
+#
+#     def __call__(self):
+#         print('*' * 30, "\nВыбор действия:\n1 - добавление данных\n2 - удаление данных\n3 - поиск данных\n"
+#                         "4 - редактирование данных\n5 - просмотр данных\n6 - завершение работы")
+#
+#     @staticmethod
+#     def write_json(country_dict, city_dict):
+#         data = json.load(open('country.json'))
+#         data[country_dict] = city_dict
+#         with open('country.json', 'w') as f:
+#             json.dump(data, f, indent=2)
+#         print("Файл сохранен")
+#
+#     @staticmethod
+#     def delete_json(country_dict):
+#         data = json.load(open('country.json'))
+#         del data[country_dict]
+#         with open('country.json', 'w') as f:
+#             json.dump(data, f, indent=2)
+#         print("Файл успешно отредактирован и сохранен")
+#
+#     @staticmethod
+#     def search_json(country_dict):
+#         data = json.load(open('country.json'))
+#         if country_dict in data:
+#             print(f"Страна: {country_dict}, со столицей: {data[country_dict]} хранится в нашей базе")
+#         else:
+#             print("Такая страна отсутствует в нашей базе")
+#
+#     @staticmethod
+#     def redaction_json(country_dict, city_dict):
+#         data = json.load(open('country.json'))
+#         data[country_dict] = city_dict
+#         with open('country.json', 'w') as f:
+#             json.dump(data, f, indent=2)
+#         print("Файл успешно отредактирован и сохранен")
+#
+#     @staticmethod
+#     def info():
+#         with open('country.json', 'r') as f:
+#             data = json.load(f)
+#             print(data)
+#
+#     def action(self, number):
+#         while number != 6:
+#             if number == 1:
+#                 country1 = input("Введите название страны (с заглавной буквы): ")
+#                 city1 = input("Введите название столицы (с заглавной буквы): ")
+#                 self.write_json(country1, city1)
+#                 self.__call__()
+#                 self.action(int(input("Ввод: ")))
+#             elif number == 2:
+#                 country2 = input("Введите страну, которую хотите удалить (с заглавной буквы): ")
+#                 self.delete_json(country2)
+#                 self.__call__()
+#                 self.action(int(input("Ввод: ")))
+#             elif number == 3:
+#                 country3 = input("Введите страну, которую хотите найти (с заглавной буквы): ")
+#                 self.search_json(country3)
+#                 self.__call__()
+#                 self.action(int(input("Ввод: ")))
+#             elif number == 4:
+#                 country4 = input("Введите страну, которую хотите отредактировать (с заглавной буквы): ")
+#                 city4 = input("Введите новое название столицы: ")
+#                 self.redaction_json(country4, city4)
+#                 self.__call__()
+#                 self.action(int(input("Ввод: ")))
+#             elif number == 5:
+#                 self.info()
+#                 self.__call__()
+#                 self.action(int(input("Ввод: ")))
+#             break
+#
+#
+# s = Place()
+# s()
+# num = int(input("Ввод: "))
+# s.action(num)
+# print("Работа завершена")
+# print(30 * '*')
 
-class Place:
-    data = dict()
+# 09.04
 
-    def __call__(self):
-        print('*' * 30, "\nВыбор действия:\n1 - добавление данных\n2 - удаление данных\n3 - поиск данных\n"
-                        "4 - редактирование данных\n5 - просмотр данных\n6 - завершение работы")
+# pip install beautifulsoup4 request
 
-    @staticmethod
-    def write_json(country_dict, city_dict):
-        data = json.load(open('country.json'))
-        data[country_dict] = city_dict
-        with open('country.json', 'w') as f:
-            json.dump(data, f, indent=2)
-        print("Файл сохранен")
-
-    @staticmethod
-    def delete_json(country_dict):
-        data = json.load(open('country.json'))
-        del data[country_dict]
-        with open('country.json', 'w') as f:
-            json.dump(data, f, indent=2)
-        print("Файл успешно отредактирован и сохранен")
-
-    @staticmethod
-    def search_json(country_dict):
-        data = json.load(open('country.json'))
-        if country_dict in data:
-            print(f"Страна: {country_dict}, со столицей: {data[country_dict]} хранится в нашей базе")
-        else:
-            print("Такая страна отсутствует в нашей базе")
-
-    @staticmethod
-    def redaction_json(country_dict, city_dict):
-        data = json.load(open('country.json'))
-        data[country_dict] = city_dict
-        with open('country.json', 'w') as f:
-            json.dump(data, f, indent=2)
-        print("Файл успешно отредактирован и сохранен")
-
-    @staticmethod
-    def info():
-        with open('country.json', 'r') as f:
-            data = json.load(f)
-            print(data)
-
-    def action(self, number):
-        while number != 6:
-            if number == 1:
-                country1 = input("Введите название страны (с заглавной буквы): ")
-                city1 = input("Введите название столицы (с заглавной буквы): ")
-                self.write_json(country1, city1)
-                self.__call__()
-                self.action(int(input("Ввод: ")))
-            elif number == 2:
-                country2 = input("Введите страну, которую хотите удалить (с заглавной буквы): ")
-                self.delete_json(country2)
-                self.__call__()
-                self.action(int(input("Ввод: ")))
-            elif number == 3:
-                country3 = input("Введите страну, которую хотите найти (с заглавной буквы): ")
-                self.search_json(country3)
-                self.__call__()
-                self.action(int(input("Ввод: ")))
-            elif number == 4:
-                country4 = input("Введите страну, которую хотите отредактировать (с заглавной буквы): ")
-                city4 = input("Введите новое название столицы: ")
-                self.redaction_json(country4, city4)
-                self.__call__()
-                self.action(int(input("Ввод: ")))
-            elif number == 5:
-                self.info()
-                self.__call__()
-                self.action(int(input("Ввод: ")))
-            break
+# from bs4 import BeautifulSoup
 
 
-s = Place()
-s()
-num = int(input("Ввод: "))
-s.action(num)
-print("Работа завершена")
-print(30 * '*')
+import requests
+from bs4 import BeautifulSoup
+import csv
+
+def get_html(url):
+    response = requests.get(url)
+    if not response.ok:
+        print(f"Server responded with {response.status_code}")
+    else:
+        return response.text
+
+
+def parse_html(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    movie_list = soup.find_all('div', {'class': 'lister-item mode-advanced'})
+
+    data = []
+    for movie in movie_list:
+        title = movie.find('h3', {'class': 'lister-item-header'}).a.text.strip()
+        year = movie.find('span', {'class': 'lister-item-year'}).text.strip('()')
+        rating = movie.find('div', {'class': 'ratings-bar'}).strong.text.strip()
+        link = movie.find('h3', {'class': 'lister-item-header'}).a.get('href')
+        data.append([title, year, rating, link])
+
+    return data
+
+def write_csv(data):
+    with open('movies.csv', 'w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Title', 'Year', 'Rating', 'Link'])
+        writer.writerows(data)
+
+url = 'https://www.imdb.com/chart/top'
+
+html = get_html(url)
+
+data = parse_html(html)
+
+write_csv(data)
