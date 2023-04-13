@@ -1122,60 +1122,330 @@
 
 # 14.04
 
-import requests
-from bs4 import BeautifulSoup
-import csv
+# import requests
+# from bs4 import BeautifulSoup
+# import csv
+#
+#
+# class IMDBScraper:
+#     def __init__(self, url):
+#         self.url = url
+#
+#     def fetch_data(self):
+#         response = requests.get(self.url)
+#         if response.ok:
+#             return response.text
+#         else:
+#             print('Error loading page', self.url)
+#
+#     def parse_top_250(self):
+#         data = []
+#         html = self.fetch_data()
+#         soup = BeautifulSoup(html, 'html.parser')
+#         table = soup.find('tbody', {'class': 'lister-list'})
+#         rows = table.find_all('tr')
+#         for row in rows:
+#             title_column = row.find('td', {'class': 'titleColumn'})
+#             title = title_column.a.text
+#             year = title_column.span.text.strip('()')
+#             rating = row.find('td', {'class': 'ratingColumn'}).strong.text
+#             data.append([title, year, rating])
+#         return data
+#
+#     def parse_top_250_no_pandas(self):
+#         data = []
+#         html = self.fetch_data()
+#         soup = BeautifulSoup(html, 'html.parser')
+#         table = soup.find('tbody', {'class': 'lister-list'})
+#         rows = table.find_all('tr')
+#         for row in rows:
+#             title_column = row.find('td', {'class': 'titleColumn'})
+#             title = title_column.a.text
+#             year = title_column.span.text.strip('()')
+#             rating = row.find('td', {'class': 'ratingColumn'}).strong.text
+#             data.append([title, year, rating])
+#         return data
+#
+#
+# url = 'https://www.imdb.com/chart/top/'
+# scraper = IMDBScraper(url)
+# data = scraper.parse_top_250()
+# for item in data:
+#     print(item)
+#
+# # save data to a CSV file
+# with open('imdb_top_250.csv', 'w', newline='', encoding='utf-8') as f:
+#     writer = csv.writer(f)
+#     writer.writerow(['Title', 'Year', 'Rating'])
+#     writer.writerows(data)
+# print('Data saved to imdb_top_250.csv.')
 
+# 16.04
 
-class IMDBScraper:
-    def __init__(self, url):
-        self.url = url
+# class Movie:
+#     def __init__(self, title, genre, director, year, duration, studio, actors):
+#         self.title = title
+#         self.genre = genre
+#         self.director = director
+#         self.year = year
+#         self.duration = duration
+#         self.studio = studio
+#         self.actors = actors
+#
+#
+# class MovieController:
+#     def __init__(self, model):
+#         self.model = model
+#
+#     def update_title(self, new_title):
+#         self.model.title = new_title
+#
+#     def update_genre(self, new_genre):
+#         self.model.genre = new_genre
+#
+#     def update_director(self, new_director):
+#         self.model.director = new_director
+#
+#     def update_year(self, new_year):
+#         self.model.year = new_year
+#
+#     def update_duration(self, new_duration):
+#         self.model.duration = new_duration
+#
+#     def update_studio(self, new_studio):
+#         self.model.studio = new_studio
+#
+#     def update_actors(self, new_actors):
+#         self.model.actors = new_actors
+#
+#
+# class MovieView:
+#     def __init__(self, model):
+#         self.model = model
+#
+#     def print_movie_details(self):
+#         print("Movie Title: {}".format(self.model.title))
+#         print("Genre: {}".format(self.model.genre))
+#         print("Director: {}".format(self.model.director))
+#         print("Year: {}".format(self.model.year))
+#         print("Duration: {}".format(self.model.duration))
+#         print("Studio: {}".format(self.model.studio))
+#         print("Actors: {}".format(self.model.actors))
+#
+# # Создаем объект фильма
+# movie = Movie("The Shawshank Redemption", "Drama", "Frank Darabont", 1994, 142, "Castle Rock Entertainment", ["Tim Robbins", "Morgan Freeman"])
+#
+# # Создаем объекты контроллера и представления
+# controller = MovieController(movie)
+# view = MovieView(movie)
+#
+# # Изменяем название фильма
+# controller.update_title("The Godfather")
+#
+# # Выводим информацию о фильме на экран
+# view.print_movie_details()
 
-    def fetch_data(self):
-        response = requests.get(self.url)
-        if response.ok:
-            return response.text
+# 16.04
+# class Movie:
+#     def __init__(self, title, genre, director, year, duration, studio, actors):
+#         self.title = title
+#         self.genre = genre
+#         self.director = director
+#         self.year = year
+#         self.duration = duration
+#         self.studio = studio
+#         self.actors = actors
+#
+#
+# class MovieCatalog:
+#     def __init__(self):
+#         self.movies = []
+#
+#     def add_movie(self, movie):
+#         self.movies.append(movie)
+#
+#     def remove_movie_by_title(self, title):
+#         for movie in self.movies:
+#             if movie.title == title:
+#                 self.movies.remove(movie)
+#                 return True
+#         return False
+#
+#     def find_movie_by_title(self, title):
+#         for movie in self.movies:
+#             if movie.title == title:
+#                 return movie
+#         return None
+#
+#     def list_movies(self):
+#         for movie in self.movies:
+#             print(movie.title)
+#
+#
+# class MovieView:
+#     def __init__(self, movie):
+#         self.movie = movie
+#
+#     def print_movie_details(self):
+#         print("Title:", self.movie.title)
+#         print("Genre:", self.movie.genre)
+#         print("Director:", self.movie.director)
+#         print("Year:", self.movie.year)
+#         print("Duration:", self.movie.duration)
+#         print("Studio:", self.movie.studio)
+#         print("Actors:", ", ".join(self.movie.actors))
+#
+#
+# class MovieController:
+#     def __init__(self):
+#         self.catalog = MovieCatalog()
+#         self.current_movie = None
+#         self.view = None
+#
+#     def run(self):
+#         print("Welcome to the Movie Catalog App!")
+#         while True:
+#             print("\nMenu:")
+#             print("1 - Add Movie")
+#             print("2 - List Movies")
+#             print("3 - View Movie Details")
+#             print("4 - Remove Movie")
+#             print("q - Quit")
+#
+#             choice = input("Enter choice: ")
+#
+#             if choice == "1":
+#                 # Добавление фильма в каталог
+#                 title = input("Enter movie title: ")
+#                 genre = input("Enter movie genre: ")
+#                 director = input("Enter movie director: ")
+#                 year = int(input("Enter movie year: "))
+#                 duration = int(input("Enter movie duration in minutes: "))
+#                 studio = input("Enter movie studio: ")
+#                 actors = input("Enter movie actors (separate with commas): ")
+#                 actors_list = actors.split(",")
+#
+#                 movie = Movie(title, genre, director, year, duration, studio, actors_list)
+#                 self.catalog.add_movie(movie)
+#
+#                 print("Movie added to catalog!")
+#
+#             elif choice == "2":
+#                 # Вывод списка фильмов в каталоге
+#                 self.catalog.list_movies()
+#
+#             elif choice == "3":
+#                 # Просмотр информации о конкретном фильме
+#                 title = input("Enter movie title: ")
+#                 movie = self.catalog.find_movie_by_title(title)
+#
+#                 if movie:
+#                     self.current_movie = movie
+#                     self.view = MovieView(movie)
+#                     self.view.print_movie_details()
+#                 else:
+#                     print("Movie not found in catalog!")
+#
+#             elif choice == "4":
+#                 # Удаление фильма из каталога
+#                 title = input("Enter movie title: ")
+#                 removed = self.catalog.remove_movie_by_title(title)
+#
+#                 if removed:
+#                     print("Movie removed from catalog!")
+#                 else:
+#                     print("Movie not found in catalog!")
+#             elif choice == "q":
+#                 # Выход из программы
+#                 print("Goodbye!")
+#                 break
+#
+#             else:
+#                 # Некорректный ввод
+#               print("Invalid choice. Please try again.")
+
+class Film:
+    def __init__(self, title, genre, director, year, duration, studio, actors):
+        self.title = title
+        self.genre = genre
+        self.director = director
+        self.year = year
+        self.duration = duration
+        self.studio = studio
+        self.actors = actors
+
+    def __str__(self):
+        return f"Название: {self.title}\nЖанр: {self.genre}\nРежиссер: {self.director}\n" \
+               f"Год выпуска: {self.year}\nДлительность: {self.duration} мин.\nСтудия: {self.studio}\n" \
+               f"Актеры: {', '.join(self.actors)}\n"
+
+class FilmCatalog:
+    def __init__(self):
+        self.catalog = []
+
+    def add_film(self, film):
+        self.catalog.append(film)
+
+    def view_catalog(self):
+        if not self.catalog:
+            print("Каталог фильмов пуст")
         else:
-            print('Error loading page', self.url)
+            for index, film in enumerate(self.catalog):
+                print(f"Фильм {index + 1}:\n{film}\n")
 
-    def parse_top_250(self):
-        data = []
-        html = self.fetch_data()
-        soup = BeautifulSoup(html, 'html.parser')
-        table = soup.find('tbody', {'class': 'lister-list'})
-        rows = table.find_all('tr')
-        for row in rows:
-            title_column = row.find('td', {'class': 'titleColumn'})
-            title = title_column.a.text
-            year = title_column.span.text.strip('()')
-            rating = row.find('td', {'class': 'ratingColumn'}).strong.text
-            data.append([title, year, rating])
-        return data
+    def view_film(self, title):
+        for film in self.catalog:
+            if film.title == title:
+                print(film)
+                break
+        else:
+            print("Фильм не найден")
 
-    def parse_top_250_no_pandas(self):
-        data = []
-        html = self.fetch_data()
-        soup = BeautifulSoup(html, 'html.parser')
-        table = soup.find('tbody', {'class': 'lister-list'})
-        rows = table.find_all('tr')
-        for row in rows:
-            title_column = row.find('td', {'class': 'titleColumn'})
-            title = title_column.a.text
-            year = title_column.span.text.strip('()')
-            rating = row.find('td', {'class': 'ratingColumn'}).strong.text
-            data.append([title, year, rating])
-        return data
+    def remove_film(self, title):
+        for index, film in enumerate(self.catalog):
+            if film.title == title:
+                del self.catalog[index]
+                print(f"Фильм {title} удален из каталога")
+                break
+        else:
+            print("Фильм не найден в каталоге")
+
+    def run(self):
+        while True:
+            action = input("Выберите действие:\n1 - добавление фильма\n2 - каталог фильмов\n"
+                           "3 - просмотр определенного фильма\n4 - удаление фильма\nq - выход из программы\n")
+
+            if action == "1":
+                title = input("Введите название фильма: ")
+                genre = input("Введите жанр фильма: ")
+                director = input("Введите режиссера фильма: ")
+                year = input("Введите год выпуска фильма: ")
+                duration = input("Введите длительность фильма в минутах: ")
+                studio = input("Введите студию фильма: ")
+                actors = input("Введите имена актеров через запятую: ").split(",")
+                film = Film(title, genre, director, year, duration, studio, actors)
+                self.add_film(film)
+                print(f"Фильм {title} добавлен в каталог")
+
+            elif action == "2":
+                self.view_catalog()
+
+            elif action == "3":
+                title = input("Введите название фильма: ")
+                self.view_film(title)
+
+            elif action == "4":
+                title = input("Введите название фильма: ")
+                self.remove_film(title)
+
+            elif action == "q":
+                print("Выход из программы")
+                break
+
+            else:
+                print("Некорректный ввод. Попробуйте еще раз.")
 
 
-url = 'https://www.imdb.com/chart/top/'
-scraper = IMDBScraper(url)
-data = scraper.parse_top_250()
-for item in data:
-    print(item)
-
-# save data to a CSV file
-with open('imdb_top_250.csv', 'w', newline='', encoding='utf-8') as f:
-    writer = csv.writer(f)
-    writer.writerow(['Title', 'Year', 'Rating'])
-    writer.writerows(data)
-print('Data saved to imdb_top_250.csv.')
+if __name__ == '__main__':
+    catalog = FilmCatalog()
+    catalog.run()
