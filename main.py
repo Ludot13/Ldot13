@@ -1364,88 +1364,98 @@
 #                 # Некорректный ввод
 #               print("Invalid choice. Please try again.")
 
-class Film:
-    def __init__(self, title, genre, director, year, duration, studio, actors):
-        self.title = title
-        self.genre = genre
-        self.director = director
-        self.year = year
-        self.duration = duration
-        self.studio = studio
-        self.actors = actors
+# class Film:
+#     def __init__(self, title, genre, director, year, duration, studio, actors):
+#         self.title = title
+#         self.genre = genre
+#         self.director = director
+#         self.year = year
+#         self.duration = duration
+#         self.studio = studio
+#         self.actors = actors
+#
+#     def __str__(self):
+#         return f"Название: {self.title}\nЖанр: {self.genre}\nРежиссер: {self.director}\n" \
+#                f"Год выпуска: {self.year}\nДлительность: {self.duration} мин.\nСтудия: {self.studio}\n" \
+#                f"Актеры: {', '.join(self.actors)}\n"
+#
+# class FilmCatalog:
+#     def __init__(self):
+#         self.catalog = []
+#
+#     def add_film(self, film):
+#         self.catalog.append(film)
+#
+#     def view_catalog(self):
+#         if not self.catalog:
+#             print("Каталог фильмов пуст")
+#         else:
+#             for index, film in enumerate(self.catalog):
+#                 print(f"Фильм {index + 1}:\n{film}\n")
+#
+#     def view_film(self, title):
+#         for film in self.catalog:
+#             if film.title == title:
+#                 print(film)
+#                 break
+#         else:
+#             print("Фильм не найден")
+#
+#     def remove_film(self, title):
+#         for index, film in enumerate(self.catalog):
+#             if film.title == title:
+#                 del self.catalog[index]
+#                 print(f"Фильм {title} удален из каталога")
+#                 break
+#         else:
+#             print("Фильм не найден в каталоге")
+#
+#     def run(self):
+#         while True:
+#             action = input("Выберите действие:\n1 - добавление фильма\n2 - каталог фильмов\n"
+#                            "3 - просмотр определенного фильма\n4 - удаление фильма\nq - выход из программы\n")
+#
+#             if action == "1":
+#                 title = input("Введите название фильма: ")
+#                 genre = input("Введите жанр фильма: ")
+#                 director = input("Введите режиссера фильма: ")
+#                 year = input("Введите год выпуска фильма: ")
+#                 duration = input("Введите длительность фильма в минутах: ")
+#                 studio = input("Введите студию фильма: ")
+#                 actors = input("Введите имена актеров через запятую: ").split(",")
+#                 film = Film(title, genre, director, year, duration, studio, actors)
+#                 self.add_film(film)
+#                 print(f"Фильм {title} добавлен в каталог")
+#
+#             elif action == "2":
+#                 self.view_catalog()
+#
+#             elif action == "3":
+#                 title = input("Введите название фильма: ")
+#                 self.view_film(title)
+#
+#             elif action == "4":
+#                 title = input("Введите название фильма: ")
+#                 self.remove_film(title)
+#
+#             elif action == "q":
+#                 print("Выход из программы")
+#                 break
+#
+#             else:
+#                 print("Некорректный ввод. Попробуйте еще раз.")
+#
+#
+# if __name__ == '__main__':
+#     catalog = FilmCatalog()
+#     catalog.run()
 
-    def __str__(self):
-        return f"Название: {self.title}\nЖанр: {self.genre}\nРежиссер: {self.director}\n" \
-               f"Год выпуска: {self.year}\nДлительность: {self.duration} мин.\nСтудия: {self.studio}\n" \
-               f"Актеры: {', '.join(self.actors)}\n"
+import sqlite3
 
-class FilmCatalog:
-    def __init__(self):
-        self.catalog = []
-
-    def add_film(self, film):
-        self.catalog.append(film)
-
-    def view_catalog(self):
-        if not self.catalog:
-            print("Каталог фильмов пуст")
-        else:
-            for index, film in enumerate(self.catalog):
-                print(f"Фильм {index + 1}:\n{film}\n")
-
-    def view_film(self, title):
-        for film in self.catalog:
-            if film.title == title:
-                print(film)
-                break
-        else:
-            print("Фильм не найден")
-
-    def remove_film(self, title):
-        for index, film in enumerate(self.catalog):
-            if film.title == title:
-                del self.catalog[index]
-                print(f"Фильм {title} удален из каталога")
-                break
-        else:
-            print("Фильм не найден в каталоге")
-
-    def run(self):
-        while True:
-            action = input("Выберите действие:\n1 - добавление фильма\n2 - каталог фильмов\n"
-                           "3 - просмотр определенного фильма\n4 - удаление фильма\nq - выход из программы\n")
-
-            if action == "1":
-                title = input("Введите название фильма: ")
-                genre = input("Введите жанр фильма: ")
-                director = input("Введите режиссера фильма: ")
-                year = input("Введите год выпуска фильма: ")
-                duration = input("Введите длительность фильма в минутах: ")
-                studio = input("Введите студию фильма: ")
-                actors = input("Введите имена актеров через запятую: ").split(",")
-                film = Film(title, genre, director, year, duration, studio, actors)
-                self.add_film(film)
-                print(f"Фильм {title} добавлен в каталог")
-
-            elif action == "2":
-                self.view_catalog()
-
-            elif action == "3":
-                title = input("Введите название фильма: ")
-                self.view_film(title)
-
-            elif action == "4":
-                title = input("Введите название фильма: ")
-                self.remove_film(title)
-
-            elif action == "q":
-                print("Выход из программы")
-                break
-
-            else:
-                print("Некорректный ввод. Попробуйте еще раз.")
-
-
-if __name__ == '__main__':
-    catalog = FilmCatalog()
-    catalog.run()
+with sqlite3.connect("profile.db") as con:
+    cur = con.cursor()
+    cur.execute("""CREATE TABLE user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL, 
+    summa REAL, 
+    date TEXT)""")
