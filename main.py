@@ -1450,12 +1450,133 @@
 #     catalog = FilmCatalog()
 #     catalog.run()
 
-import sqlite3
+# import sqlite3
+#
+# with sqlite3.connect("profile.db") as con:
+#     cur = con.cursor()
+#     cur.execute("""CREATE TABLE user(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     name TEXT NOT NULL,
+#     summa REAL,
+#     date TEXT)""")
 
-with sqlite3.connect("profile.db") as con:
-    cur = con.cursor()
-    cur.execute("""CREATE TABLE user(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL, 
-    summa REAL, 
-    date TEXT)""")
+
+# from sqlalchemy import create_engine, Column, Integer, String
+# from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy.orm import sessionmaker
+#
+# # Создаем экземпляр движка для работы с базой данных
+# engine = create_engine('sqlite:///example.db', echo=True)
+#
+# # Создаем экземпляр базового класса для создания таблиц
+# Base = declarative_base()
+#
+# # Создаем класс для таблицы
+# class User(Base):
+#     __tablename__ = 'users'
+#
+#     id = Column(Integer, primary_key=True)
+#     name = Column(String)
+#     age = Column(Integer)
+#
+#     def __repr__(self):
+#         return f"<User(name='{self.name}', age={self.age})>"
+#
+# # Создаем таблицу в базе данных
+# Base.metadata.create_all(engine)
+#
+# # Создаем сессию для работы с базой данных
+# Session = sessionmaker(bind=engine)
+# session = Session()
+#
+# # Добавляем данные в таблицу
+# user1 = User(name='John', age=30)
+# user2 = User(name='Mary', age=25)
+# user3 = User(name='Bob', age=40)
+#
+# session.add_all([user1, user2, user3])
+# session.commit()
+#
+# # Закрываем сессию
+# session.close()
+
+
+from sqlalchemy import create_engine, Column, Integer, String, text
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+engine = create_engine('sqlite:///example.db', echo=True)
+Base = declarative_base()
+Session = sessionmaker(bind=engine)
+session = Session()
+
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    age = Column(Integer)
+
+    def __repr__(self):
+        return f"<User(name='{self.name}', age={self.age})>"
+
+
+Base.metadata.create_all(engine)
+
+# добавляем записи в таблицу "users"
+users_data = [
+    {"name": "Иван", "age": 25},
+    {"name": "Елена", "age": 30},
+    {"name": "Алексей", "age": 20},
+    {"name": "Ольга", "age": 35},
+    {"name": "Андрей", "age": 28},
+    {"name": "Мария", "age": 32},
+    {"name": "Николай", "age": 40},
+    {"name": "Татьяна", "age": 22},
+    {"name": "Дмитрий", "age": 29},
+    {"name": "Анастасия", "age": 27},
+]
+
+for user in users_data:
+    new_user = User(name=user["name"], age=user["age"])
+    session.add(new_user)
+
+session.commit()
+
+# выбираем всех пользователей
+all_users = session.query(User).all()
+print("Все пользователи:")
+for user in all_users:
+    print(user)
+
+# выбираем пользователей по возрасту
+age = 30
+users_by_age = session.query(User).filter(User.age >= age).all()
+print(f"Пользователи старше {age} лет:")
+for user in users_by_age:
+    print(user)
+
+# выбираем пользователя с определенным именем
+name = "Мария"
+user_by_name = session.query(User).filter(User.name == name).one()
+print(f"Пользователь с именем {name}:")
+print(user_by_name)
+
+# изменяем возраст пользователя
+user_to_update = session.query(User).filter(User.name == "Николай").one()
+user_to_update.age = 42
+session.commit()
+print(f"Возраст пользователя {user_to_update.name} изменен на {user_to_update.age} лет")
+
+# удаляем пользователя
+user_to_delete = session.query(User).filter(User.name == "Татьяна").one()
+session.delete(user_to_delete)
+session.commit()
+print(f"Пользователь {user_to_delete.name} удален из базы данных")
+
+# выполняем произвольный запрос SQL
+sql_query = text("SELECT * FROM users WHERE age > :age")
+users_by_sql_query = session.query(User).from_statement(sql_query).params(age=30).all()
+print("Пользователи, у которых возраст больше 30 лет (выполнение произвольного SQL-запроса):")
+for user in users_by_sql_query:
+    print(user)
