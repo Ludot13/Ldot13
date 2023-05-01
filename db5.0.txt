@@ -1,142 +1,10 @@
+
 1.
-SELECT COUNT(Client) AS "Количество клиентов"
-FROM Client;
-
-2.	
-SELECT COUNT(Seller) AS [Количество посредников]
-FROM Seller
-WHERE Status LIKE 'посредник';
-
-3.	
-SELECT AVG(CostUnit*Count) AS 'Средняя сумма товара'
-FROM ClientGoods;
-
-4.	
-SELECT SUM(CostUnit*Count) AS 'Сумма товара'
-FROM ClientGoods;
-
-5.	
-SELECT MAX(Count) AS 'Максимальное кол-во товара'
-FROM SallerGoods;
-
-6.	
-SELECT MIN(CostUnit*Count) AS 'Минимальная сумма покупки'
-FROM ClientGoods;
-
-7.	
-SELECT SUM(cg.CostUnit*cg.Count) AS 'Сумма продажи магазинам'
-FROM ClientGoods cg, Client c
-WHERE cg.INNClient = c.INNClient AND Status = "магазин";
-
-8.	
-SELECT COUNT(Goods) AS 'Количество вафель'
-FROM SallerGoods
-WHERE Goods LIKE "Вафли%";
-
-9.	
-SELECT AVG(CostUnit) AS 'Средняя цена растительного масла'
-FROM SallerGoods
-WHERE Goods IN("масло подсолнечное", "масло кукурузное", "масло оливковое");
-
-10.	
-SELECT SUM(cg.Count) AS 'Количество проданных яблок'
-FROM SallerGoods sg, ClientGoods cg
-WHERE sg.ID=cg.ID AND Goods LIKE "Яблоки%";
-
-11.	
-SELECT SUM(cg.Count) AS 'Количество картофеля для кафе'
-FROM Client c, ClientGoods cg, SallerGoods sg
-WHERE c.INNClient=cg.INNClient AND cg.ID=sg.ID AND sg.Goods="Картофель белый" AND c.Status = "кафе";
-
-12.	
-SELECT COUNT(cg.ID)
-FROM SallerGoods sg, ClientGoods cg
-WHERE sg.ID=cg.ID AND sg.Goods="Перец черный молотый";
-
-13.	
-SELECT DISTINCT COUNT(cg.ID) AS "Количество наименований товара"
-FROM ClientGoods cg;
-
-14.	
-SELECT MIN(CostUnit) AS "Минимальная цена товара"
-FROM ClientGoods;
-
-15.	
-SELECT MIN(CostUnit*Count) AS "Минимальная сумма товара"
-FROM ClientGoods;
-
-16.	
-SELECT MAX(cg.CostUnit*cg.Count) AS "Максимальная сумма за товар"
-FROM ClientGoods cg, Client c
-WHERE c.INNClient=cg.INNClient AND c.Status="магазин";
-
-17.	
-SELECT c.Client AS "Фирма", COUNT(DISTINCT(sg.INNSeller)) AS "Количество фирм-сотрудников"
-FROM Client c, ClientGoods cg, SallerGoods sg
-WHERE c.INNClient=cg.INNClient AND cg.ID=sg.ID
-GROUP BY c.Client;
-
-18.	
-SELECT s.Seller, MIN(cg.CostUnit*cg.Count) AS "Минимальная сумма сделки"
-FROM ClientGoods cg, SallerGoods sg, Seller s
-WHERE cg.ID=sg.ID AND sg.INNSeller=s.INNSeller
-AND s.Status="производитель"
-GROUP BY s.Seller;
-
-19.	
-SELECT AVG(cg.CostUnit) AS "Средняя цена за пачку чая"
-FROM ClientGoods cg, SallerGoods sg
-WHERE cg.ID=sg.ID AND sg.Goods LIKE "Чай%"
-
-20.	.
-SELECT MAX((sg.CostUnit*sg.Count) - (cg.CostUnit*cg.Count)) AS "Максимальная сумма прибыли посредника"
-FROM ClientGoods cg, SallerGoods sg, Client c
-WHERE sg.ID=cg.ID AND c.INNClient=cg.INNClient AND c.Status="посредник";
-
-21.	 
-SELECT MIN((sg.CostUnit*sg.Count) - (cg.CostUnit*cg.Count)) AS "Минимальная сумма прибыли посредника"
-FROM ClientGoods cg, Seller s, SallerGoods sg
-WHERE s.INNSeller=sg.INNSeller AND sg.ID=cg.ID AND s.Status="посредник";
-
-22.	 
-SELECT s.Seller, COUNT(cg.ID)
-FROM ClientGoods cg, SallerGoods sg, Seller s
-WHERE sg.ID=cg.ID AND s.INNSeller=sg.INNSeller
-GROUP BY s.Seller;
-
-
-23.	
-SELECT COUNT(Goods) AS "Виды печенья"
-FROM SallerGoods
-WHERE Goods LIKE "Печенье%";
-
-24.	 
-SELECT c.Client, MAX(CostUnit*Count)
-FROM Client c, ClientGoods cg
-WHERE c.INNClient=cg.INNClient
-GROUP BY c.Client;
-
-24.	 
-SELECT AVG((sg.CostUnit*sg.Count) - (cg.CostUnit*cg.Count)) AS "Средняя прибыль от перепродажи масла"
-FROM ClientGoods cg, SallerGoods sg
-WHERE cg.ID=cg.ID AND sg.Goods LIKE "масло%"
-
-26.	 
-SELECT c.Client AS "Фирма", COUNT(DISTINCT(sg.INNSeller)) AS "Количество фирм-посредников"
-FROM Client c, ClientGoods cg, SallerGoods sg, Seller s
-WHERE c.INNClient=cg.INNClient AND cg.ID=sg.ID AND s.INNSeller=sg.INNSeller
-AND s.Status="посредник"
-GROUP BY c.Client;
-
-
-
-
-1.С помощью объединения вывести данные о каждом заказчике, для которого определен продавец.
 SELECT *
 FROM Klient k INNER JOIN Prodaves p
 ON k.ID_Pr = p.ID_Pr;
 
-2.Вывести имя заказчика и данные о средней цене доставки для него. Если цена доставки больше средней по таблице написать - lot, меньше – few
+2.
 SELECT k.Name_KL, AVG(z.Cena_Dostavki) AS [Средняя цена], "lot" AS [Цена доставки] 
 FROM Klient k, Zakaz z
 WHERE k.ID_KL=z.ID_KL
@@ -151,29 +19,29 @@ GROUP BY k.Name_KL
 HAVING z.Cena_Dostavki < (SELECT AVG(Cena_Dostavki) 
 FROM Zakaz z);
 
-3.Соедините вместе все таблицы с помощью внешнего объединения.
+3.
 SELECT *
 FROM Prodaves p FULL OUTER JOIN Klient k ON p.ID_Pr=k.ID_Pr FULL OUTER JOIN Zakaz z
 ON k.ID_KL=z.ID_KL;
 
-4.С помощью объединения вывести данные о скидках клиента для каждого продавца
+4.
 SELECT p.Name_Pr AS "Продавец", k.Name_KL AS "Клиент", k.Discoun
 FROM Prodaves p LEFT JOIN Klient k 
 ON p.ID_Pr=k.ID_Pr;
 
-5.Напишите запрос, который выведет все города, в которых живут продавцы и заказчики.
+5.
 SELECT City_Pr AS Город
 FROM Prodaves
 UNION
 SELECT City_Kl
 FROM Klient;
 
-6.С помощью объединения вывести все данные о заказчиках и  заказах, даже если заказчик не сделал ни одного заказа за указанный период.
+6.иод.
 SELECT *
 FROM Klient k FULL OUTER JOIN Zakaz z
 ON k.ID_KL=z.ID_KL;
 
-7.Составьте запрос для вывода имен и кодов всех продавцов, в чьих городах есть покупатели, которых они не обслуживают. С помощью оператора в подзапросе.
+7.
 SELECT p.ID_Pr, p.Name_Pr
 FROM Prodaves p
 WHERE p.City_Pr != (SELECT k.City_KL
@@ -181,7 +49,7 @@ WHERE p.City_Pr != (SELECT k.City_KL
     WHERE p.ID_Pr=k.ID_Pr
     GROUP BY k.City_KL);
 
-8.Напишите запрос, который выведет все города и имена продавцов и заказчиков, которые живут в Лондоне.
+8.
 SELECT Name_Pr, City_Pr
 FROM Prodaves
 WHERE City_Pr = "London"
