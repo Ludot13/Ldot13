@@ -1580,3 +1580,66 @@ users_by_sql_query = session.query(User).from_statement(sql_query).params(age=30
 print("Пользователи, у которых возраст больше 30 лет (выполнение произвольного SQL-запроса):")
 for user in users_by_sql_query:
     print(user)
+
+# Выбрать всех пользователей, отсортированных по возрастанию возраста:
+users_by_age = session.query(User).order_by(User.age).all()
+
+# Выбрать пользователей, возраст которых больше 30 лет, и отсортировать их по убыванию возраста:
+users_by_age = session.query(User).filter(User.age > 30).order_by(User.age.desc()).all()
+
+# Выбрать имена пользователей, отсортированные по алфавиту:
+user_names = session.query(User.name).order_by(User.name).all()
+
+# Выбрать количество пользователей:
+user_count = session.query(User).count()
+
+# Выбрать имя и возраст пользователя с максимальным возрастом:
+max_age_user = session.query(User.name, User.age).order_by(User.age.desc()).first()
+
+# Выбрать пользователей с именами, начинающимися на "А":
+users_a = session.query(User).filter(User.name.like("А%")).all()
+
+# Выбрать средний возраст пользователей:
+avg_age = session.query(func.avg(User.age)).scalar()
+
+# Выбрать пользователей, у которых имя содержит букву "е":
+users_e = session.query(User).filter(User.name.ilike("%е%")).all()
+
+# Изменить имя пользователя с id=3:
+user_to_update = session.query(User).filter(User.id == 3).one()
+user_to_update.name = "Новое имя"
+session.commit()
+
+# Удалить всех пользователей с возрастом меньше 25 лет:
+session.query(User).filter(User.age < 25).delete()
+session.commit()
+
+
+
+# 07.05.23
+
+# from jinja2 import Template
+#
+# lst = [
+# {'href': '/index', 'text': 'Главная'},
+# {'href': '/news', 'text': 'Новости'},
+# {'href': '/about', 'text': 'О компании'},
+# {'href': '/shop', 'text': 'Магазин'},
+# {'href': '/contacts', 'text': 'Контакты'},
+# ]
+#
+# link = """<ul>
+# {% for l in lst -%}
+# {% if l.text == 'Главная' -%}
+# <li><a href="{{ l['href'] }}" class="active">{{ l['text'] }}</a></li>
+# {% else -%}
+# <li><a href="{{ l['href'] }}">{{ l['text'] }}</a></li>
+# {% endif -%}
+# {% endfor -%}
+# </ul>
+# """
+#
+# tm = Template(link)
+# msg = tm.render(lst=lst)
+#
+# print(msg)
