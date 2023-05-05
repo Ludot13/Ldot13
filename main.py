@@ -1501,123 +1501,123 @@
 # session.close()
 
 
-from sqlalchemy import create_engine, Column, Integer, String, text
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-
-engine = create_engine('sqlite:///example.db', echo=True)
-Base = declarative_base()
-Session = sessionmaker(bind=engine)
-session = Session()
-
-
-class User(Base):
-    __tablename__ = 'users'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    age = Column(Integer)
-
-    def __repr__(self):
-        return f"<User(name='{self.name}', age={self.age})>"
-
-
-Base.metadata.create_all(engine)
-
-# добавляем записи в таблицу "users"
-users_data = [
-    {"name": "Иван", "age": 25},
-    {"name": "Елена", "age": 30},
-    {"name": "Алексей", "age": 20},
-    {"name": "Ольга", "age": 35},
-    {"name": "Андрей", "age": 28},
-    {"name": "Мария", "age": 32},
-    {"name": "Николай", "age": 40},
-    {"name": "Татьяна", "age": 22},
-    {"name": "Дмитрий", "age": 29},
-    {"name": "Анастасия", "age": 27},
-]
-
-for user in users_data:
-    new_user = User(name=user["name"], age=user["age"])
-    session.add(new_user)
-
-session.commit()
-
-# выбираем всех пользователей
-all_users = session.query(User).all()
-print("Все пользователи:")
-for user in all_users:
-    print(user)
-
-# выбираем пользователей по возрасту
-age = 30
-users_by_age = session.query(User).filter(User.age >= age).all()
-print(f"Пользователи старше {age} лет:")
-for user in users_by_age:
-    print(user)
-
-# выбираем пользователя с определенным именем
-name = "Мария"
-user_by_name = session.query(User).filter(User.name == name).one()
-print(f"Пользователь с именем {name}:")
-print(user_by_name)
-
-# изменяем возраст пользователя
-user_to_update = session.query(User).filter(User.name == "Николай").one()
-user_to_update.age = 42
-session.commit()
-print(f"Возраст пользователя {user_to_update.name} изменен на {user_to_update.age} лет")
-
-# удаляем пользователя
-user_to_delete = session.query(User).filter(User.name == "Татьяна").one()
-session.delete(user_to_delete)
-session.commit()
-print(f"Пользователь {user_to_delete.name} удален из базы данных")
-
-# выполняем произвольный запрос SQL
-sql_query = text("SELECT * FROM users WHERE age > :age")
-users_by_sql_query = session.query(User).from_statement(sql_query).params(age=30).all()
-print("Пользователи, у которых возраст больше 30 лет (выполнение произвольного SQL-запроса):")
-for user in users_by_sql_query:
-    print(user)
-
-# Выбрать всех пользователей, отсортированных по возрастанию возраста:
-users_by_age = session.query(User).order_by(User.age).all()
-
-# Выбрать пользователей, возраст которых больше 30 лет, и отсортировать их по убыванию возраста:
-users_by_age = session.query(User).filter(User.age > 30).order_by(User.age.desc()).all()
-
-# Выбрать имена пользователей, отсортированные по алфавиту:
-user_names = session.query(User.name).order_by(User.name).all()
-
-# Выбрать количество пользователей:
-user_count = session.query(User).count()
-
-# Выбрать имя и возраст пользователя с максимальным возрастом:
-max_age_user = session.query(User.name, User.age).order_by(User.age.desc()).first()
-
-# Выбрать пользователей с именами, начинающимися на "А":
-users_a = session.query(User).filter(User.name.like("А%")).all()
-
-# Выбрать средний возраст пользователей:
-avg_age = session.query(func.avg(User.age)).scalar()
-
-# Выбрать пользователей, у которых имя содержит букву "е":
-users_e = session.query(User).filter(User.name.ilike("%е%")).all()
-
-# Изменить имя пользователя с id=3:
-user_to_update = session.query(User).filter(User.id == 3).one()
-user_to_update.name = "Новое имя"
-session.commit()
-
-# Удалить всех пользователей с возрастом меньше 25 лет:
-session.query(User).filter(User.age < 25).delete()
-session.commit()
-
-
-
-# 07.05.23
-
+# from sqlalchemy import create_engine, Column, Integer, String, text
+# from sqlalchemy.orm import sessionmaker
+# from sqlalchemy.ext.declarative import declarative_base
+#
+# engine = create_engine('sqlite:///example.db', echo=True)
+# Base = declarative_base()
+# Session = sessionmaker(bind=engine)
+# session = Session()
+#
+#
+# class User(Base):
+#     __tablename__ = 'users'
+#     id = Column(Integer, primary_key=True)
+#     name = Column(String)
+#     age = Column(Integer)
+#
+#     def __repr__(self):
+#         return f"<User(name='{self.name}', age={self.age})>"
+#
+#
+# Base.metadata.create_all(engine)
+#
+# # добавляем записи в таблицу "users"
+# users_data = [
+#     {"name": "Иван", "age": 25},
+#     {"name": "Елена", "age": 30},
+#     {"name": "Алексей", "age": 20},
+#     {"name": "Ольга", "age": 35},
+#     {"name": "Андрей", "age": 28},
+#     {"name": "Мария", "age": 32},
+#     {"name": "Николай", "age": 40},
+#     {"name": "Татьяна", "age": 22},
+#     {"name": "Дмитрий", "age": 29},
+#     {"name": "Анастасия", "age": 27},
+# ]
+#
+# for user in users_data:
+#     new_user = User(name=user["name"], age=user["age"])
+#     session.add(new_user)
+#
+# session.commit()
+#
+# # выбираем всех пользователей
+# all_users = session.query(User).all()
+# print("Все пользователи:")
+# for user in all_users:
+#     print(user)
+#
+# # выбираем пользователей по возрасту
+# age = 30
+# users_by_age = session.query(User).filter(User.age >= age).all()
+# print(f"Пользователи старше {age} лет:")
+# for user in users_by_age:
+#     print(user)
+#
+# # выбираем пользователя с определенным именем
+# name = "Мария"
+# user_by_name = session.query(User).filter(User.name == name).one()
+# print(f"Пользователь с именем {name}:")
+# print(user_by_name)
+#
+# # изменяем возраст пользователя
+# user_to_update = session.query(User).filter(User.name == "Николай").one()
+# user_to_update.age = 42
+# session.commit()
+# print(f"Возраст пользователя {user_to_update.name} изменен на {user_to_update.age} лет")
+#
+# # удаляем пользователя
+# user_to_delete = session.query(User).filter(User.name == "Татьяна").one()
+# session.delete(user_to_delete)
+# session.commit()
+# print(f"Пользователь {user_to_delete.name} удален из базы данных")
+#
+# # выполняем произвольный запрос SQL
+# sql_query = text("SELECT * FROM users WHERE age > :age")
+# users_by_sql_query = session.query(User).from_statement(sql_query).params(age=30).all()
+# print("Пользователи, у которых возраст больше 30 лет (выполнение произвольного SQL-запроса):")
+# for user in users_by_sql_query:
+#     print(user)
+#
+# # Выбрать всех пользователей, отсортированных по возрастанию возраста:
+# users_by_age = session.query(User).order_by(User.age).all()
+#
+# # Выбрать пользователей, возраст которых больше 30 лет, и отсортировать их по убыванию возраста:
+# users_by_age = session.query(User).filter(User.age > 30).order_by(User.age.desc()).all()
+#
+# # Выбрать имена пользователей, отсортированные по алфавиту:
+# user_names = session.query(User.name).order_by(User.name).all()
+#
+# # Выбрать количество пользователей:
+# user_count = session.query(User).count()
+#
+# # Выбрать имя и возраст пользователя с максимальным возрастом:
+# max_age_user = session.query(User.name, User.age).order_by(User.age.desc()).first()
+#
+# # Выбрать пользователей с именами, начинающимися на "А":
+# users_a = session.query(User).filter(User.name.like("А%")).all()
+#
+# # Выбрать средний возраст пользователей:
+# avg_age = session.query(func.avg(User.age)).scalar()
+#
+# # Выбрать пользователей, у которых имя содержит букву "е":
+# users_e = session.query(User).filter(User.name.ilike("%е%")).all()
+#
+# # Изменить имя пользователя с id=3:
+# user_to_update = session.query(User).filter(User.id == 3).one()
+# user_to_update.name = "Новое имя"
+# session.commit()
+#
+# # Удалить всех пользователей с возрастом меньше 25 лет:
+# session.query(User).filter(User.age < 25).delete()
+# session.commit()
+#
+#
+#
+# # 07.05.23
+#
 # from jinja2 import Template
 #
 # lst = [
@@ -1643,3 +1643,80 @@ session.commit()
 # msg = tm.render(lst=lst)
 #
 # print(msg)
+
+
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+# создаем объект для работы с базой данных
+engine = create_engine('sqlite:///test.db', echo=True)
+
+# создаем сессию для работы с базой данных
+Session = sessionmaker(bind=engine)
+session = Session()
+
+# определяем модель таблицы
+Base = declarative_base()
+class User(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    age = Column(Integer)
+
+    def __repr__(self):
+        return f"<User(id={self.id}, name='{self.name}', age={self.age})>"
+
+# создаем таблицу в базе данных
+Base.metadata.create_all(engine)
+
+# добавляем данные в таблицу
+user1 = User(name='John', age=25)
+user2 = User(name='Alice', age=30)
+user3 = User(name='Bob', age=35)
+
+session.add_all([user1, user2, user3])
+session.commit()
+
+# выполним запросы к таблице
+# выбрать всех пользователей
+users = session.query(User).all()
+print(users)
+
+# выбрать пользователей, возраст которых меньше 30
+young_users = session.query(User).filter(User.age < 30).all()
+print(young_users)
+
+# выбрать пользователей, имя которых начинается на 'J'
+j_users = session.query(User).filter(User.name.like('J%')).all()
+print(j_users)
+
+# выбрать количество пользователей в таблице
+user_count = session.query(User).count()
+print(user_count)
+
+# выбрать самого молодого пользователя
+youngest_user = session.query(User).order_by(User.age).first()
+print(youngest_user)
+
+# изменить возраст пользователя с id=1 на 27
+user = session.query(User).filter_by(id=1).first()
+user.age = 27
+session.commit()
+
+# удалить пользователя с id=2
+session.query(User).filter_by(id=2).delete()
+session.commit()
+
+# выбрать пользователей, отсортированных по возрастанию возраста
+users = session.query(User).order_by(User.age).all()
+print(users)
+
+# выбрать пользователей, отсортированных по убыванию возраста и выбрать только их имена
+user_names = session.query(User.name).order_by(User.age.desc()).all()
+print(user_names)
+
+# выбрать максимальный возраст пользователей
+max_age = session.query(User.age).order_by(User.age.desc()).first()
+print(max_age)
