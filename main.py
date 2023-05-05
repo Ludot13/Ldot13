@@ -1668,15 +1668,21 @@ class User(Base):
     def __repr__(self):
         return f"<User(id={self.id}, name='{self.name}', age={self.age})>"
 
-# создаем таблицу в базе данных
-Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+session = Session()
 
-# добавляем данные в таблицу
-user1 = User(name='John', age=25)
-user2 = User(name='Alice', age=30)
-user3 = User(name='Bob', age=35)
+user1 = User(name='Alice', age=25)
+user2 = User(name='Bob', age=30)
+user3 = User(name='Charlie', age=35)
+user4 = User(name='Dave', age=40)
+user5 = User(name='Eve', age=45)
+user6 = User(name='Frank', age=50)
+user7 = User(name='Grace', age=55)
+user8 = User(name='Heidi', age=60)
+user9 = User(name='Ivan', age=65)
+user10 = User(name='John', age=70)
 
-session.add_all([user1, user2, user3])
+session.add_all([user1, user2, user3, user4, user5, user6, user7, user8, user9, user10])
 session.commit()
 
 # выполним запросы к таблице
