@@ -1645,84 +1645,135 @@
 # print(msg)
 
 
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy import create_engine, Column, Integer, String
+# from sqlalchemy.orm import sessionmaker
+# from sqlalchemy.ext.declarative import declarative_base
+#
+# # создаем объект для работы с базой данных
+# engine = create_engine('sqlite:///test.db', echo=True)
+#
+# # создаем сессию для работы с базой данных
+# Session = sessionmaker(bind=engine)
+# session = Session()
+#
+# # определяем модель таблицы
+# Base = declarative_base()
+# class User(Base):
+#     __tablename__ = 'users'
+#
+#     id = Column(Integer, primary_key=True)
+#     name = Column(String)
+#     age = Column(Integer)
+#
+#     def __repr__(self):
+#         return f"<User(id={self.id}, name='{self.name}', age={self.age})>"
+#
+# Session = sessionmaker(bind=engine)
+# session = Session()
+#
+# user1 = User(name='Alice', age=25)
+# user2 = User(name='Bob', age=30)
+# user3 = User(name='Charlie', age=35)
+# user4 = User(name='Dave', age=40)
+# user5 = User(name='Eve', age=45)
+# user6 = User(name='Frank', age=50)
+# user7 = User(name='Grace', age=55)
+# user8 = User(name='Heidi', age=60)
+# user9 = User(name='Ivan', age=65)
+# user10 = User(name='John', age=70)
+#
+# session.add_all([user1, user2, user3, user4, user5, user6, user7, user8, user9, user10])
+# session.commit()
+#
+# # выполним запросы к таблице
+# # выбрать всех пользователей
+# users = session.query(User).all()
+# print(users)
+#
+# # выбрать пользователей, возраст которых меньше 30
+# young_users = session.query(User).filter(User.age < 30).all()
+# print(young_users)
+#
+# # выбрать пользователей, имя которых начинается на 'J'
+# j_users = session.query(User).filter(User.name.like('J%')).all()
+# print(j_users)
+#
+# # выбрать количество пользователей в таблице
+# user_count = session.query(User).count()
+# print(user_count)
+#
+# # выбрать самого молодого пользователя
+# youngest_user = session.query(User).order_by(User.age).first()
+# print(youngest_user)
+#
+# # изменить возраст пользователя с id=1 на 27
+# user = session.query(User).filter_by(id=1).first()
+# user.age = 27
+# session.commit()
+#
+# # удалить пользователя с id=2
+# session.query(User).filter_by(id=2).delete()
+# session.commit()
+#
+# # выбрать пользователей, отсортированных по возрастанию возраста
+# users = session.query(User).order_by(User.age).all()
+# print(users)
+#
+# # выбрать пользователей, отсортированных по убыванию возраста и выбрать только их имена
+# user_names = session.query(User.name).order_by(User.age.desc()).all()
+# print(user_names)
+#
+# # выбрать максимальный возраст пользователей
+# max_age = session.query(User.age).order_by(User.age.desc()).first()
+# print(max_age)
 
-# создаем объект для работы с базой данных
-engine = create_engine('sqlite:///test.db', echo=True)
 
-# создаем сессию для работы с базой данных
-Session = sessionmaker(bind=engine)
-session = Session()
+# 26.05.23
+# Variant 1
+import tkinter as tk
 
-# определяем модель таблицы
-Base = declarative_base()
-class User(Base):
-    __tablename__ = 'users'
+def open_page1():
+    page_label.config(text="Открыта страница 1")
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    age = Column(Integer)
+def open_page2():
+    page_label.config(text="Открыта страница 2")
 
-    def __repr__(self):
-        return f"<User(id={self.id}, name='{self.name}', age={self.age})>"
+root = tk.Tk()
 
-Session = sessionmaker(bind=engine)
-session = Session()
+menubar = tk.Menu(root)
+root.config(menu=menubar)
 
-user1 = User(name='Alice', age=25)
-user2 = User(name='Bob', age=30)
-user3 = User(name='Charlie', age=35)
-user4 = User(name='Dave', age=40)
-user5 = User(name='Eve', age=45)
-user6 = User(name='Frank', age=50)
-user7 = User(name='Grace', age=55)
-user8 = User(name='Heidi', age=60)
-user9 = User(name='Ivan', age=65)
-user10 = User(name='John', age=70)
+file_menu = tk.Menu(menubar, tearoff=0)
+file_menu.add_command(label="Открыть страницу 1", command=open_page1)
+file_menu.add_command(label="Открыть страницу 2", command=open_page2)
 
-session.add_all([user1, user2, user3, user4, user5, user6, user7, user8, user9, user10])
-session.commit()
+menubar.add_cascade(label="Файл", menu=file_menu)
 
-# выполним запросы к таблице
-# выбрать всех пользователей
-users = session.query(User).all()
-print(users)
+page_label = tk.Label(root, text="")
+page_label.pack()
 
-# выбрать пользователей, возраст которых меньше 30
-young_users = session.query(User).filter(User.age < 30).all()
-print(young_users)
+root.mainloop()
 
-# выбрать пользователей, имя которых начинается на 'J'
-j_users = session.query(User).filter(User.name.like('J%')).all()
-print(j_users)
 
-# выбрать количество пользователей в таблице
-user_count = session.query(User).count()
-print(user_count)
-
-# выбрать самого молодого пользователя
-youngest_user = session.query(User).order_by(User.age).first()
-print(youngest_user)
-
-# изменить возраст пользователя с id=1 на 27
-user = session.query(User).filter_by(id=1).first()
-user.age = 27
-session.commit()
-
-# удалить пользователя с id=2
-session.query(User).filter_by(id=2).delete()
-session.commit()
-
-# выбрать пользователей, отсортированных по возрастанию возраста
-users = session.query(User).order_by(User.age).all()
-print(users)
-
-# выбрать пользователей, отсортированных по убыванию возраста и выбрать только их имена
-user_names = session.query(User.name).order_by(User.age.desc()).all()
-print(user_names)
-
-# выбрать максимальный возраст пользователей
-max_age = session.query(User.age).order_by(User.age.desc()).first()
-print(max_age)
+# Variant 2
+# import tkinter as tk
+# def open_page1():
+#     # Здесь можно добавить код для открытия и заполнения страницы 1
+#     print("Открыта страница 1")
+#
+# def open_page2():
+#     # Здесь можно добавить код для открытия и заполнения страницы 2
+#     print("Открыта страница 2")
+#
+# root = tk.Tk()
+#
+# menubar = tk.Menu(root)
+# root.config(menu=menubar)
+#
+# file_menu = tk.Menu(menubar, tearoff=0)
+# file_menu.add_command(label="Открыть страницу 1", command=open_page1)
+# file_menu.add_command(label="Открыть страницу 2", command=open_page2)
+#
+# menubar.add_cascade(label="Файл", menu=file_menu)
+#
+# root.mainloop()
