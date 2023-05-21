@@ -1730,29 +1730,29 @@
 
 # 26.05.23
 # Variant 1
-import tkinter as tk
-
-def open_page1():
-    page_label.config(text="Открыта страница 1")
-
-def open_page2():
-    page_label.config(text="Открыта страница 2")
-
-root = tk.Tk()
-
-menubar = tk.Menu(root)
-root.config(menu=menubar)
-
-file_menu = tk.Menu(menubar, tearoff=0)
-file_menu.add_command(label="Открыть страницу 1", command=open_page1)
-file_menu.add_command(label="Открыть страницу 2", command=open_page2)
-
-menubar.add_cascade(label="Файл", menu=file_menu)
-
-page_label = tk.Label(root, text="")
-page_label.pack()
-
-root.mainloop()
+# import tkinter as tk
+#
+# def open_page1():
+#     page_label.config(text="Открыта страница 1")
+#
+# def open_page2():
+#     page_label.config(text="Открыта страница 2")
+#
+# root = tk.Tk()
+#
+# menubar = tk.Menu(root)
+# root.config(menu=menubar)
+#
+# file_menu = tk.Menu(menubar, tearoff=0)
+# file_menu.add_command(label="Открыть страницу 1", command=open_page1)
+# file_menu.add_command(label="Открыть страницу 2", command=open_page2)
+#
+# menubar.add_cascade(label="Файл", menu=file_menu)
+#
+# page_label = tk.Label(root, text="")
+# page_label.pack()
+#
+# root.mainloop()
 
 
 # Variant 2
@@ -1777,3 +1777,21 @@ root.mainloop()
 # menubar.add_cascade(label="Файл", menu=file_menu)
 #
 # root.mainloop()
+
+# 21.05.23
+
+from jinja2 import Environment, FileSystemLoader
+
+persons = ['Алексей', 'Никита', 'Виталий']
+
+file_loader = FileSystemLoader('templates_new')
+env = Environment(loader=file_loader)
+
+tm = env.get_template("page.html")
+rendered_page = tm.render(students=persons, title="Домашнее задание")
+
+# Сохраняем сгенерированную страницу в файл
+with open("templates_new/output.html", "w") as file:
+    file.write(rendered_page)
+
+print("HTML-страница сгенерирована и сохранена в output.html.")
