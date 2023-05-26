@@ -1780,18 +1780,50 @@
 
 # 21.05.23
 
-from jinja2 import Environment, FileSystemLoader
+# from jinja2 import Environment, FileSystemLoader
+#
+# persons = ['Алексей', 'Никита', 'Виталий']
+#
+# file_loader = FileSystemLoader('templates_new')
+# env = Environment(loader=file_loader)
+#
+# tm = env.get_template("page.html")
+# rendered_page = tm.render(students=persons, title="Домашнее задание")
+#
+# # Сохраняем сгенерированную страницу в файл
+# with open("templates_new/output.html", "w") as file:
+#     file.write(rendered_page)
+#
+# print("HTML-страница сгенерирована и сохранена в output.html.")
 
-persons = ['Алексей', 'Никита', 'Виталий']
 
-file_loader = FileSystemLoader('templates_new')
-env = Environment(loader=file_loader)
+class Page:
+    def __init__(self, title, content):
+        self.title = title
+        self.content = content
 
-tm = env.get_template("page.html")
-rendered_page = tm.render(students=persons, title="Домашнее задание")
+    def display(self):
+        print(f"--- {self.title} ---")
+        print(self.content)
+        print("--------------------")
 
-# Сохраняем сгенерированную страницу в файл
-with open("templates_new/output.html", "w") as file:
-    file.write(rendered_page)
 
-print("HTML-страница сгенерирована и сохранена в output.html.")
+# Создание страниц
+homepage = Page("Главная страница", "Добро пожаловать на главную страницу!")
+about_author_page = Page("Об авторе", "Привет! Меня зовут Алиса, и я автор этого генератора паролей.")
+password_rules_page = Page("Правила генератора паролей", "Правила: 1) Длина пароля не менее 8 символов. 2) Использование разных типов символов. 3) Исключение личных данных. 4) Случайность.")
+
+# Связывание страниц ссылками
+homepage_links = [about_author_page, password_rules_page]
+homepage_links_text = ["Об авторе", "Правила генератора паролей"]
+homepage_content = homepage.content + "\n\nСсылки:"
+
+for i in range(len(homepage_links)):
+    homepage_content += f"\n- [{homepage_links_text[i]}](#{homepage_links[i].title.replace(' ', '-')})"
+
+homepage.content = homepage_content
+
+# Отображение страниц
+homepage.display()
+about_author_page.display()
+password_rules_page.display()
